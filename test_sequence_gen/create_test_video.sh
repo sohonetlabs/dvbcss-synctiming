@@ -38,7 +38,8 @@ fi
 
 FPS=50
 WINDOW_LEN=7
-SIZE=854x480
+SIZE=1920x1080
+DURATION=300
 
 ## alternative parameters for a quick-to-create video
 #FPS=25
@@ -79,6 +80,7 @@ rm -r "$TMPDIR"/*.wav
 	--frame-filename    "$FRAME_FILE_PATTERN" \
 	--wav-filename      "$WAV_FILE" \
 	--metadata-filename "$METADATA_FILE" \
+	--duration "$DURATION"
 
 if [ $? -ne 0 ]; then
 	echo "Error during creation of wav/png/metadata. Aborting" >&2
