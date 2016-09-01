@@ -39,7 +39,7 @@ fi
 FPS=50
 WINDOW_LEN=7
 SIZE=1920x1080
-DURATION=300
+DURATION=30
 
 ## alternative parameters for a quick-to-create video
 #FPS=25
