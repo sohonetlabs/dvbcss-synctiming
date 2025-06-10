@@ -40,19 +40,19 @@ class Test_genTone(unittest.TestCase):
         tg = GenTone(sampleRate, peakValue, toneHz, phaseOffsetCycles)
         
         for i in range(0,10000):
-            self.assertAlmostEquals(tg.next(),  0.0, places=15)
-            self.assertAlmostEquals(tg.next(),  1.0, places=15)
-            self.assertAlmostEquals(tg.next(),  0.0, places=15)
-            self.assertAlmostEquals(tg.next(), -1.0, places=15)
+            self.assertAlmostEqual(next(tg),  0.0, places=15)
+            self.assertAlmostEqual(next(tg),  1.0, places=15)
+            self.assertAlmostEqual(next(tg),  0.0, places=15)
+            self.assertAlmostEqual(next(tg), -1.0, places=15)
 
         phaseOffsetCycles = 0.25
         tg = GenTone(sampleRate, peakValue, toneHz, phaseOffsetCycles)
         
         for i in range(0,10000):
-            self.assertAlmostEquals(tg.next(),  1.0, places=15)
-            self.assertAlmostEquals(tg.next(),  0.0, places=15)
-            self.assertAlmostEquals(tg.next(), -1.0, places=15)
-            self.assertAlmostEquals(tg.next(),  0.0, places=15)
+            self.assertAlmostEqual(next(tg),  1.0, places=15)
+            self.assertAlmostEqual(next(tg),  0.0, places=15)
+            self.assertAlmostEqual(next(tg), -1.0, places=15)
+            self.assertAlmostEqual(next(tg),  0.0, places=15)
     
 
  
