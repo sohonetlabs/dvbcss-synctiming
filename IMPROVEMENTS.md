@@ -977,8 +977,40 @@ python generate_fractional.py --fps-ntsc-film \
     --duration 10
 ```
 
+## Command-Line Interface
+
+The implementation provides a complete command-line tool `generate_fractional.py` with full argparse support:
+
+```bash
+# Show all available options
+python src/generate_fractional.py --help
+
+# Basic fractional frame rate generation
+python src/generate_fractional.py --fps 23.976 --duration 10
+
+# Using broadcast shortcuts
+python src/generate_fractional.py --fps-ntsc-film --size-4k-full --duration 5
+
+# Using complete format presets
+python src/generate_fractional.py --preset-1080p59.94 --duration 10
+
+# Specify custom output paths
+python src/generate_fractional.py --fps-ntsc \
+    --frame-filename my_output/frame_%06d.png \
+    --wav-filename my_output/audio.wav \
+    --metadata-filename my_output/metadata.json \
+    --duration 5
+```
+
+### Default Output Locations
+- `build/audio.wav` - Audio file
+- `build/img_%06d.png` - Frame images
+- `build/metadata.json` - Metadata file
+
+The tool automatically creates output directories if they don't exist.
+
 ## Conclusion
 
 This comprehensive implementation successfully adds fractional frame rate support to the DVB CSS synchronization timing measurement system while maintaining the reliability and precision required for professional broadcast testing. The use of Test-Driven Development with Hypothesis property-based testing ensures mathematical correctness and robustness.
 
-The implementation is complete, tested, and ready for use in professional broadcast and cinema applications.
+The implementation is complete, tested, and ready for use in professional broadcast and cinema applications. The command-line interface provides easy access to all features through a standard argparse implementation.
