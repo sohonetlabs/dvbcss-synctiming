@@ -836,6 +836,75 @@ BROADCAST_STANDARDS = {
 }
 ```
 
+### Bit Timing Design and Base FPS Concept
+
+The bit timing system uses a "base fps" approach for pattern consistency and detection reliability:
+
+#### Why Base FPS?
+
+1. **Pattern Recognition**: Detection algorithms look for pulses at specific time intervals. Using consistent base timings ensures patterns are recognizable across related frame rates.
+
+2. **Hardware Compatibility**: Detection hardware is designed around specific timing patterns. Related frame rates share timing characteristics for easier detection.
+
+3. **Broadcast Standards**: Follows broadcast engineering practices where frame rate families use consistent timing.
+
+#### Base FPS Mapping
+
+```python
+# Frame rate families and their base fps:
+23.976 fps (24000/1001) → uses 24 fps base
+29.97 fps (30000/1001)  → uses 30 fps base  
+47.952 fps (48000/1001) → uses 24 fps base (like 48 fps)
+59.94 fps (60000/1001)  → uses 30 fps base (like 60 fps)
+119.88 fps (120000/1001) → uses 30 fps base (like 120 fps)
+```
+
+#### Bit Timing Calculation
+
+For any frame rate, bit timings are calculated using the base fps:
+
+```python
+# For 29.97 fps (30000/1001):
+base_fps = 30  # Uses 30 fps base
+
+# Standard bit positions: 3.5 and 9.5 frame units
+zero_timing = 3.5 / base_fps = 3.5/30 = 7/60 seconds = 0.1167s
+one_timing_1 = 3.5 / base_fps = 7/60 seconds = 0.1167s  
+one_timing_2 = 9.5 / base_fps = 9.5/30 = 19/60 seconds = 0.3167s
+```
+
+#### Frame Alignment Example
+
+At 29.97 fps with 30 fps base timing:
+- Frame duration: 1001/30000 ≈ 0.03337 seconds
+- Zero bit at 7/60 = 0.1167 seconds occurs at frame position:
+  `0.1167 × (30000/1001) ≈ 3.496 frames`
+- Flash appears in the middle of frame 3 (3.5 frames from start)
+
+#### Timing Diagram Example
+
+```
+Frame Rate Comparison: 30.00 fps vs 29.97 fps
+
+Time (seconds): 0.000   0.033   0.067   0.100   0.133   0.167   0.200   0.233   0.267   0.300
+                  |       |       |       |       |       |       |       |       |       |
+
+30.00 fps:     [Frame0][Frame1][Frame2][Frame3][Frame4][Frame5][Frame6][Frame7][Frame8][Frame9]
+29.97 fps:     [Frame0 ][Frame1 ][Frame2 ][Frame3 ][Frame4 ][Frame5 ][Frame6 ][Frame7 ][Frame8 ]
+
+Bit Timing:                                     ●                                               ●
+               Zero bit flash (0.1167s)                    One bit flash 2 (0.3167s)
+```
+
+Both frame rates use **identical absolute timing** (0.1167s, 0.3167s) for detection compatibility.
+
+#### Benefits
+
+✅ **Same detection algorithm** works for 30.00 fps and 29.97 fps  
+✅ **Hardware compatibility** - no rate-specific calibration needed  
+✅ **Reliable pattern detection** across broadcast equipment  
+✅ **Small timing differences** don't affect detection accuracy  
+
 ### Updated fpsBitTimings Structure
 ```python
 fpsBitTimings = {

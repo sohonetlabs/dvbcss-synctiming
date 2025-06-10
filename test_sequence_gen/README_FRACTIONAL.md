@@ -88,6 +88,38 @@ All timing calculations use Python's `fractions.Fraction` for exact precision:
 - Frame-accurate synchronization
 - Sample-accurate audio generation
 
+### Bit Timing Design and Base FPS
+
+The fractional frame rate implementation uses a "base fps" concept for bit timing patterns to maintain compatibility with existing detection systems:
+
+#### Base FPS Mapping
+```python
+23.976 fps (24000/1001) → uses 24 fps base timing
+29.97 fps (30000/1001)  → uses 30 fps base timing
+59.94 fps (60000/1001)  → uses 30 fps base timing
+```
+
+#### Why Base FPS?
+1. **Detection Compatibility**: Same detection algorithms work across frame rate families
+2. **Hardware Consistency**: No need for rate-specific calibration 
+3. **Pattern Recognition**: Broadcast equipment expects consistent timing patterns
+
+#### Example: 29.97 fps Timing
+```python
+# Uses 30 fps base, so bit timings are:
+zero_bit = 3.5/30 = 7/60 = 0.1167 seconds
+one_bit_1 = 3.5/30 = 7/60 = 0.1167 seconds  
+one_bit_2 = 9.5/30 = 19/60 = 0.3167 seconds
+
+# At 29.97 fps frame rate:
+# Zero bit occurs at frame position: 0.1167 × (30000/1001) ≈ 3.496
+# Flash appears in middle of frame 3 (3.5 frames from start)
+```
+
+This ensures that detection hardware designed for 30 fps also works perfectly with 29.97 fps content.
+
+📊 **See TIMING_DIAGRAMS.md for detailed visual diagrams and timing charts.**
+
 ### Metadata Format
 The generated `metadata.json` includes:
 - Original fields for backward compatibility (`fps`, `size`, `durationSecs`)
