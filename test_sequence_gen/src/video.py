@@ -321,7 +321,13 @@ def genFrameImages(size, flashColourGen, flashColourGenPipTrain, numFrames, FPS,
         topLeft = scaler.xy((10,dfy))
         draw.text(topLeft, "Duration: " + durationTimecode, font=font, fill=TEXT_COLOUR)
         topLeft = scaler.xy((10,dfy+5))
-        draw.text(topLeft, "%d fps" % labelFps, font=font, fill=TEXT_COLOUR)
+        # Format FPS with appropriate precision for fractional rates
+        if isinstance(labelFps, float) and labelFps != int(labelFps):
+            # Show fractional FPS with 3 decimal places
+            draw.text(topLeft, "%.3f fps" % labelFps, font=font, fill=TEXT_COLOUR)
+        else:
+            # Show integer FPS without decimals
+            draw.text(topLeft, "%d fps" % int(labelFps), font=font, fill=TEXT_COLOUR)
 
         # and more text labels, but this time right justified
         text = title

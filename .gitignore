@@ -43,3 +43,18 @@ var/
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
+
+# Test outputs
+test_output/
+test_fps_*.png
+test_sequence_gen/src/output/
+
+# Virtual environments
+venv/
+.venv/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.hypothesis/
