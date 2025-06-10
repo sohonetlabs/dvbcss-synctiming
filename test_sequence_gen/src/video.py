@@ -249,7 +249,10 @@ def genFrameImages(size, flashColourGen, flashColourGenPipTrain, numFrames, FPS,
         segment_description_text = "\n".join(map(lambda seg : seg["description"], segments))
         tmpimg = Image.new("RGB", (width, height), color=BG_COLOUR)
         tmpdraw = ImageDraw.Draw(tmpimg)
-        w,h = tmpdraw.multiline_textsize(segment_description_text, font=smallfont)
+        # Use multiline_textbbox for newer Pillow versions
+        bbox = tmpdraw.multiline_textbbox((0, 0), segment_description_text, font=smallfont)
+        w = bbox[2] - bbox[0]
+        h = bbox[3] - bbox[1]
         max_w, max_h = scaler.xy((140,13))
         
         shrink_factor = min(float(max_w) / w, float(max_h) / h, 1)
@@ -322,7 +325,10 @@ def genFrameImages(size, flashColourGen, flashColourGenPipTrain, numFrames, FPS,
 
         # and more text labels, but this time right justified
         text = title
-        w,h = font.getsize(text)
+        # Use textbbox for newer Pillow versions
+        bbox = draw.textbbox((0, 0), text, font=font)
+        w = bbox[2] - bbox[0]
+        h = bbox[3] - bbox[1]
         topLeft = scaler.xy((150,4))
         topLeft = topLeft[0] - w, topLeft[1]
         draw.text(topLeft, text, font=font, fill=TITLE_COLOUR)
@@ -382,7 +388,10 @@ def genFrameImages(size, flashColourGen, flashColourGenPipTrain, numFrames, FPS,
                 if nextStartFrame <= segStartFrame:
                     nextStartFrame += numFrames
                 midAngle = math.radians(270 + 360.0* (segStartFrame+nextStartFrame)/2/numFrames)
-                w,h = font.getsize(segments[i]["label"])
+                # Use textbbox for newer Pillow versions
+                bbox = draw.textbbox((0, 0), segments[i]["label"], font=font)
+                w = bbox[2] - bbox[0]
+                h = bbox[3] - bbox[1]
                 centre = scaler.xy((130 + 15*math.cos(midAngle)*0.7, 45+poy + 15*math.sin(midAngle)*0.7))
                 topLeft = centre[0] - w/2, centre[1] - h/2
                 draw.text(topLeft, segments[i]["label"], fill=WHITE, font=font)
@@ -392,7 +401,7 @@ def genFrameImages(size, flashColourGen, flashColourGenPipTrain, numFrames, FPS,
             draw.multiline_text(topLeft, segment_description_text, fill=WHITE, font=smallfont)
         
         # draw pulse train at the bottom
-        LIM=FPS
+        LIM=int(FPS)
         NUM_BLOBS = 2*LIM + 1
         blobSpacing = 150.0/NUM_BLOBS
 
