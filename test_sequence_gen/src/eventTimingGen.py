@@ -167,19 +167,19 @@ def genSequenceFromSampleIndices(toneStartEndTimings, gapGenFactory, eventGenFac
     for (startIndex, endIndex) in toneStartEndTimings:
         gen = iter(gapGenFactory())
         while n < startIndex:
-            yield gen.next()
+            yield next(gen)
             n=n+1
            
         gen = iter(eventGenFactory())
         while n < endIndex:
-            yield gen.next()
+            yield next(gen)
             n=n+1
              
 
     # after last entry in event timings sequence, just output "gap"
     gen = gapGenFactory()
     while True:
-        yield gen.next()
+        yield next(gen)
         
 
 def genSequenceStartEnds(centreTimes, eventDuration, unitsPerSecond, sampleRate):
