@@ -13,6 +13,13 @@ This document outlines a comprehensive plan to enhance the DVB CSS synchronizati
 
 ## Current Limitations
 
+### Python Version Compatibility
+The codebase is currently written in Python 2, which is end-of-life:
+- **Current**: Python 2.7 syntax (print statements, old-style string formatting)
+- **Issue**: Python 2 reached end-of-life in January 2020
+- **Impact**: Cannot use modern testing frameworks, security updates, or deployment environments
+- **Required**: Must port to Python 3 before adding new features
+
 ### Frame Rate Support
 The system currently only supports integer frame rates defined in `fpsBitTimings`:
 - **Supported**: 24, 25, 30, 48, 50, 60 fps
@@ -131,11 +138,106 @@ The system currently only supports integer frame rates defined in `fpsBitTimings
 
 ## Implementation Plan: Test-Driven Development with Hypothesis
 
-### Phase 0: Establish Test Coverage for Current Code
+### Phase 1: Port to Python 3
+
+**Objective**: Migrate the codebase from Python 2 to Python 3 while maintaining all functionality.
+
+#### Step 1.1: Identify Python 2/3 Compatibility Issues
+
+**Key Python 2 to 3 Changes Needed:**
+```python
+# Print statements → print functions
+print "text"          # Python 2
+print("text")          # Python 3
+
+# String formatting
+print "Value: %d" % x  # Python 2
+print("Value: {}".format(x))  # Python 3
+
+# Division behavior
+x = 5 / 2  # Python 2: 2, Python 3: 2.5
+x = 5 // 2  # Both: 2 (integer division)
+
+# Unicode handling
+unicode("text")        # Python 2
+str("text")           # Python 3
+
+# Import changes
+import ConfigParser    # Python 2
+import configparser    # Python 3
+```
+
+#### Step 1.2: Automated Porting with 2to3 Tool
+
+```bash
+# Use 2to3 tool for initial conversion
+source venv/bin/activate
+pip install 2to3
+
+# Convert test_sequence_gen files
+2to3 -w test_sequence_gen/src/
+2to3 -w src/
+
+# Review and manually fix any remaining issues
+```
+
+#### Step 1.3: Update Dependencies and Requirements
+
+**Update requirements.txt:**
+```
+# Old Python 2 requirements
+Pillow==3.3.1
+
+# New Python 3 requirements  
+Pillow>=10.0.0
+pytest>=7.0.0
+hypothesis>=6.0.0
+```
+
+#### Step 1.4: Test Python 3 Compatibility
+
+**Create basic smoke tests:**
+```python
+def test_python3_imports():
+    """Verify all modules import correctly in Python 3"""
+    import generate
+    import video
+    import audio
+    import eventTimingGen
+    assert True  # If we get here, imports worked
+
+def test_basic_functionality():
+    """Verify basic functionality works in Python 3"""
+    from generate import genEventCentreTimes, fpsBitTimings
+    
+    # Test that we can generate events
+    events = list(genEventCentreTimes(4, 25))
+    assert len(events) > 0
+    
+    # Test that fpsBitTimings exists
+    assert len(fpsBitTimings) > 0
+```
+
+#### Step 1.5: Manual Fixes for Complex Cases
+
+**Common manual fixes needed:**
+- Update file I/O for binary/text mode handling
+- Fix any remaining print statements in complex expressions
+- Update exception handling syntax
+- Fix any custom string/unicode handling
+
+**Quality Gate 1**: All existing functionality works in Python 3
+- ✅ All modules import without syntax errors
+- ✅ Basic event generation works
+- ✅ Video and audio generation functions
+- ✅ Command line interface works
+- ✅ Generated output matches Python 2 version
+
+### Phase 2: Establish Test Coverage for Current Code
 
 **Objective**: Add comprehensive testing for existing integer frame rate functionality using Hypothesis property-based testing.
 
-#### Step 0.1: Test Infrastructure Setup
+#### Step 2.1: Test Infrastructure Setup
 ```bash
 # Files to create:
 test_sequence_gen/tests/test_generate_current.py
@@ -143,7 +245,7 @@ test_sequence_gen/tests/test_integration_current.py
 test_sequence_gen/tests/conftest.py  # Hypothesis configuration
 ```
 
-#### Step 0.2: Basic Unit Tests (RED → GREEN → REFACTOR)
+#### Step 2.2: Basic Unit Tests (RED → GREEN → REFACTOR)
 
 **RED: Write failing tests**
 ```python
@@ -174,7 +276,7 @@ def test_bit_timings_structure():
 
 **REFACTOR: Organize test structure**
 
-#### Step 0.3: Hypothesis Property Tests (Quality Gate 0)
+#### Step 2.3: Hypothesis Property Tests (Quality Gate 2)
 
 ```python
 from hypothesis import given, strategies as st
@@ -223,7 +325,7 @@ def test_frame_timecode_roundtrip(frame_num, fps):
     assert reconstructed == frame_num
 ```
 
-#### Step 0.4: Integration Tests
+#### Step 2.4: Integration Tests
 ```python
 def test_complete_generation_workflow():
     """Test end-to-end generation for current functionality"""
@@ -250,11 +352,11 @@ def test_complete_generation_workflow():
     assert len(beep_seq) == duration * 48000
 ```
 
-**Quality Gate 0**: All current functionality tests pass with >90% coverage.
+**Quality Gate 2**: All current functionality tests pass with >90% coverage.
 
-### Phase 1: Frame Rate Parsing and Rational Arithmetic
+### Phase 3: Frame Rate Parsing and Rational Arithmetic
 
-#### Step 1.1: Frame Rate Parser Tests (RED → GREEN → REFACTOR)
+#### Step 3.1: Frame Rate Parser Tests (RED → GREEN → REFACTOR)
 
 **RED: Write failing tests**
 ```python
@@ -285,7 +387,7 @@ def parse_frame_rate(fps_str):
 
 **REFACTOR: Clean up parser logic**
 
-#### Step 1.2: Hypothesis Property Tests for Parsing (Quality Gate 1)
+#### Step 3.2: Hypothesis Property Tests for Parsing (Quality Gate 3)
 
 ```python
 @given(st.integers(min_value=1, max_value=240))
@@ -311,9 +413,9 @@ def test_rational_parsing_exact(num, den):
     assert result == (num, den)
 ```
 
-### Phase 2: Frame Timing Calculations
+### Phase 4: Frame Timing Calculations
 
-#### Step 2.1: Rational Arithmetic Tests (RED → GREEN → REFACTOR)
+#### Step 4.1: Rational Arithmetic Tests (RED → GREEN → REFACTOR)
 
 **RED: Write tests for fractional frame timing**
 ```python
@@ -332,7 +434,7 @@ def test_frame_to_time_conversion():
     assert time_secs == expected
 ```
 
-#### Step 2.2: Hypothesis Property Tests for Timing (Quality Gate 2)
+#### Step 4.2: Hypothesis Property Tests for Timing (Quality Gate 4)
 
 ```python
 @given(st.integers(min_value=1, max_value=1000),
@@ -362,7 +464,7 @@ def test_duration_calculation_properties(n_frames, fps_num, fps_den):
     assert duration == expected
 ```
 
-### Phase 3: Flash/Beep Timing Generation
+### Phase 5: Flash/Beep Timing Generation
 
 #### Step 3.1: Event Generation Tests (RED → GREEN → REFACTOR)
 
@@ -436,7 +538,7 @@ def test_flash_sequence_properties(seq_bits, fps_rational):
                for color in flash_seq)
 ```
 
-### Phase 4: CLI Integration and Shortcuts
+### Phase 6: CLI Integration and Shortcuts
 
 #### Step 4.1: CLI Parsing Tests (RED → GREEN → REFACTOR)
 
@@ -519,7 +621,7 @@ def test_preset_consistency(preset_name):
     assert 100 <= args.size[1] <= 10000
 ```
 
-### Phase 5: End-to-End Integration
+### Phase 7: End-to-End Integration
 
 #### Step 5.1: Complete Generation Tests (RED → GREEN → REFACTOR)
 
@@ -782,21 +884,13 @@ This ensures the test measures synchronization accuracy at the actual playback f
 3. ✅ pytest for test execution
 4. ✅ Coverage.py for test coverage measurement
 
-### Phase Durations (Estimated)
-- **Phase 0**: 3-5 days (test current code)
-- **Phase 1**: 2-3 days (frame rate parsing)
-- **Phase 2**: 2-3 days (timing calculations)
-- **Phase 3**: 3-4 days (event generation)
-- **Phase 4**: 2-3 days (CLI integration)
-- **Phase 5**: 2-3 days (end-to-end integration)
-- **Total**: 14-21 days
-
 ### Dependencies
-- Phase 1 depends on Phase 0 completion
-- Phase 2 depends on Phase 1 frame rate parsing
-- Phase 3 depends on Phase 2 timing calculations
-- Phase 4 can be developed in parallel with Phase 3
-- Phase 5 requires all previous phases
+- **Phase 2** depends on Phase 1 completion (Python 3 required for modern testing)
+- Phase 3 depends on Phase 2 completion
+- Phase 4 depends on Phase 3 frame rate parsing
+- Phase 5 depends on Phase 4 timing calculations
+- Phase 6 can be developed in parallel with Phase 5
+- Phase 7 requires all previous phases
 
 ## Conclusion
 
