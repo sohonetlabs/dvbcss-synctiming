@@ -226,14 +226,14 @@ def test_basic_functionality():
 - Update exception handling syntax
 - Fix any custom string/unicode handling
 
-**Quality Gate 1**: All existing functionality works in Python 3 ✅ COMPLETED
+**Quality Gate 1**: All existing functionality works in Python 3
 - ✅ All modules import without syntax errors
 - ✅ Basic event generation works
 - ✅ Video and audio generation functions
 - ✅ Command line interface works
-- ✅ Python 3 compatibility tests pass
+- ✅ Generated output matches Python 2 version
 
-### Phase 2: Establish Test Coverage for Current Code ✅ COMPLETED
+### Phase 2: Establish Test Coverage for Current Code
 
 **Objective**: Add comprehensive testing for existing integer frame rate functionality using Hypothesis property-based testing.
 
@@ -352,17 +352,11 @@ def test_complete_generation_workflow():
     assert len(beep_seq) == duration * 48000
 ```
 
-**Quality Gate 2**: All current functionality tests pass with comprehensive coverage ✅ COMPLETED
-- ✅ 33 comprehensive tests pass (unit + integration + property tests)
-- ✅ Core generation functionality (genEventCentreTimes, fpsBitTimings) fully tested
-- ✅ Hypothesis property tests verify mathematical correctness
-- ✅ Integration tests ensure module interoperability
-- ✅ Python 3 compatibility verified across all core modules
-- ✅ Test infrastructure established with pytest + Hypothesis
+**Quality Gate 2**: All current functionality tests pass with >90% coverage.
 
-### Phase 3: Frame Rate Parsing and Rational Arithmetic ✅ COMPLETED
+### Phase 3: Frame Rate Parsing and Rational Arithmetic
 
-#### Step 3.1: Frame Rate Parser Tests (RED → GREEN → REFACTOR)
+#### Step 1.1: Frame Rate Parser Tests (RED → GREEN → REFACTOR)
 
 **RED: Write failing tests**
 ```python
@@ -393,7 +387,7 @@ def parse_frame_rate(fps_str):
 
 **REFACTOR: Clean up parser logic**
 
-#### Step 3.2: Hypothesis Property Tests for Parsing (Quality Gate 3)
+#### Step 1.2: Hypothesis Property Tests for Parsing (Quality Gate 1)
 
 ```python
 @given(st.integers(min_value=1, max_value=240))
@@ -419,9 +413,9 @@ def test_rational_parsing_exact(num, den):
     assert result == (num, den)
 ```
 
-### Phase 4: Frame Timing Calculations ✅ COMPLETED
+### Phase 2: Frame Timing Calculations
 
-#### Step 4.1: Rational Arithmetic Tests (RED → GREEN → REFACTOR)
+#### Step 2.1: Rational Arithmetic Tests (RED → GREEN → REFACTOR)
 
 **RED: Write tests for fractional frame timing**
 ```python
@@ -440,7 +434,7 @@ def test_frame_to_time_conversion():
     assert time_secs == expected
 ```
 
-#### Step 4.2: Hypothesis Property Tests for Timing (Quality Gate 4)
+#### Step 2.2: Hypothesis Property Tests for Timing (Quality Gate 2)
 
 ```python
 @given(st.integers(min_value=1, max_value=1000),
@@ -470,7 +464,7 @@ def test_duration_calculation_properties(n_frames, fps_num, fps_den):
     assert duration == expected
 ```
 
-### Phase 5: Flash/Beep Timing Generation ✅ COMPLETED
+### Phase 3: Flash/Beep Timing Generation
 
 #### Step 3.1: Event Generation Tests (RED → GREEN → REFACTOR)
 
@@ -544,53 +538,90 @@ def test_flash_sequence_properties(seq_bits, fps_rational):
                for color in flash_seq)
 ```
 
-### Phase 6: CLI Integration and Shortcuts ✅ COMPLETED
+### Phase 4: CLI Integration and Shortcuts
 
-#### Step 6.1: CLI Parsing Tests (RED → GREEN → REFACTOR) ✅ COMPLETED
+#### Step 4.1: CLI Parsing Tests (RED → GREEN → REFACTOR)
 
-**CLI Integration Module Created**: `test_sequence_gen/src/cli_fractional_integration.py`
-- `parse_fractional_args()`: Enhanced argument parser supporting --fps 23.976, --fps-ntsc-film, --preset-1080p59.94
-- `create_fractional_metadata()`: Metadata generation with exact rational frame rate information
-- `get_resolution_preset()`: Resolution shortcuts like --size-4k-full → (4096, 2160)
-- `get_format_preset()`: Complete format presets like --preset-1080p59.94 → ((60000, 1001), (1920, 1080))
+**RED: Test broadcast standard shortcuts**
+```python
+def test_broadcast_fps_shortcuts():
+    """Test broadcast standard frame rate shortcuts"""
+    test_cases = [
+        ("--fps-ntsc", (30000, 1001)),
+        ("--fps-ntsc-film", (24000, 1001)),
+        ("--fps-pal", (25, 1)),
+        ("--fps-film", (24, 1)),
+    ]
+    
+    for arg, expected in test_cases:
+        args = parse_args([arg, "--frame-filename", "test_%06d.png"])
+        assert args.fps_rational == expected
 
-**Test Results**: 17/17 CLI integration tests pass
-- ✅ Fractional fps argument parsing (--fps 23.976, --fps 24000/1001)
-- ✅ Broadcast standard shortcuts (--fps-ntsc-film, --fps-ntsc, --fps-pal)
-- ✅ Resolution shortcuts (--size-4k-full, --size-hd-1080, --size-2k-scope)
-- ✅ Complete format presets (--preset-1080p59.94, --preset-cinema-4k)
-- ✅ Backward compatibility with existing CLI arguments
-- ✅ Error handling for invalid inputs
-- ✅ Metadata generation and JSON serialization
-- ✅ Complete workflow integration and compatibility
+def test_resolution_shortcuts():
+    """Test resolution shortcuts"""
+    test_cases = [
+        ("--size-4k-full", (4096, 2160)),
+        ("--size-hd-1080", (1920, 1080)),
+        ("--size-2k-scope", (2048, 858)),
+    ]
+    
+    for arg, expected in test_cases:
+        args = parse_args([arg, "--frame-filename", "test_%06d.png"])
+        assert args.size == expected
 
-#### Step 6.2: Hypothesis Property Tests for CLI ✅ COMPLETED
+def test_complete_presets():
+    """Test complete format presets"""
+    args = parse_args(["--preset-1080p59.94", "--frame-filename", "test_%06d.png"])
+    assert args.fps_rational == (60000, 1001)
+    assert args.size == (1920, 1080)
+```
 
-**Property Test Suite Created**: `test_sequence_gen/tests/test_cli_fractional_hypothesis.py`
-- 18 comprehensive Hypothesis property tests covering CLI robustness
-- ✅ All broadcast shortcuts parse to valid fps rationals
-- ✅ All resolution presets are valid and reasonable
-- ✅ All format presets have consistent fps + resolution combinations
-- ✅ Integer fps parsing invariants maintained
-- ✅ Common fractional fps (23.976, 29.97, 59.94) parse correctly
-- ✅ Valid CLI combinations work across parameter space
-- ✅ Manual size parsing handles wide range of inputs
-- ✅ Format presets override individual settings correctly
-- ✅ Audio and metadata parameters preserved
-- ✅ Metadata generation properties verified
-- ✅ Edge case handling (negative fps, invalid strings, tiny resolutions)
-- ✅ CLI robustness and argument order independence
+#### Step 4.2: Hypothesis Property Tests for CLI (Quality Gate 4)
 
-**Quality Gate 6**: CLI Integration Complete ✅ COMPLETED
-- ✅ All broadcast shortcuts work correctly (ntsc, pal, film families)
-- ✅ Resolution presets are accurate (TV, cinema, professional formats)
-- ✅ Complete format presets combine fps + resolution correctly
-- ✅ Backward compatibility with existing CLI arguments maintained
-- ✅ Hypothesis tests verify robustness across parameter space
-- ✅ Error handling is graceful and informative
-- ✅ 35 total tests pass (17 integration + 18 property tests)
+```python
+# Generate valid CLI combinations
+fps_shortcuts = st.sampled_from([
+    "--fps-ntsc", "--fps-pal", "--fps-film", "--fps-ntsc-film"
+])
 
-### Phase 7: End-to-End Integration
+size_shortcuts = st.sampled_from([
+    "--size-4k-full", "--size-hd-1080", "--size-2k-scope"
+])
+
+@given(fps_shortcuts, size_shortcuts)
+def test_cli_combination_validity(fps_arg, size_arg):
+    """Property: All valid CLI combinations should parse correctly"""
+    args = parse_args([fps_arg, size_arg, "--frame-filename", "test_%06d.png"])
+    
+    # Should have valid fps rational
+    assert len(args.fps_rational) == 2
+    assert args.fps_rational[0] > 0
+    assert args.fps_rational[1] > 0
+    
+    # Should have valid size
+    assert len(args.size) == 2
+    assert args.size[0] > 0
+    assert args.size[1] > 0
+
+@given(st.sampled_from([
+    "preset-1080p59.94", "preset-cinema-4k", "preset-ntsc-sd"
+]))
+def test_preset_consistency(preset_name):
+    """Property: Presets should have consistent fps/resolution combinations"""
+    args = parse_args([f"--{preset_name}", "--frame-filename", "test_%06d.png"])
+    
+    # Verify fps and resolution are both set
+    assert hasattr(args, 'fps_rational')
+    assert hasattr(args, 'size')
+    
+    # Verify they make sense together (basic sanity)
+    fps_decimal = args.fps_rational[0] / args.fps_rational[1]
+    assert 1 <= fps_decimal <= 240
+    assert 100 <= args.size[0] <= 10000
+    assert 100 <= args.size[1] <= 10000
+```
+
+### Phase 5: End-to-End Integration
 
 #### Step 5.1: Complete Generation Tests (RED → GREEN → REFACTOR)
 
@@ -691,37 +722,26 @@ def test_professional_format_generation(format_spec):
 - ✅ No regression in existing integer frame rate support
 - ✅ Tests serve as documentation for current behavior
 
-### Phase 1 Quality Gate: Frame Rate Parsing ✅ COMPLETED
-- ✅ All common fractional rates parse correctly (23.976, 29.97, 59.94)
-- ✅ Rational arithmetic maintains exact precision using Fraction
+### Phase 1 Quality Gate: Frame Rate Parsing
+- ✅ All common fractional rates parse correctly
+- ✅ Rational arithmetic maintains exact precision
 - ✅ Integer frame rates still work (backward compatibility)
-- ✅ 24 comprehensive tests pass (14 basic + 10 property tests)
-- ✅ Hypothesis property tests verify mathematical correctness
-- ✅ Broadcast standard shortcuts work (ntsc, pal, film families)
+- ✅ Hypothesis property tests pass for all valid inputs
 - ✅ Invalid inputs fail gracefully with clear error messages
-- ✅ Round-trip conversion preserves precision
-- ✅ Parser handles all expected input formats
 
-### Phase 2 Quality Gate: Timing Calculations ✅ COMPLETED
+### Phase 2 Quality Gate: Timing Calculations
 - ✅ Frame-to-time conversions are exact (no floating point errors)
 - ✅ Time-to-frame conversions are reversible
 - ✅ Frame durations are mathematically correct
-- ✅ 33 comprehensive tests pass (18 basic + 15 property tests)
-- ✅ Hypothesis verifies monotonic time progression and mathematical invariants
+- ✅ Hypothesis verifies monotonic time progression
 - ✅ Edge cases (frame 0, large frame numbers) work correctly
-- ✅ NTSC precision verified: exact rational arithmetic for fractional rates
-- ✅ Round-trip conversions maintain identity or near-identity
-- ✅ All mathematical properties verified by property-based testing
 
-### Phase 3 Quality Gate: Event Generation ✅ COMPLETED
+### Phase 3 Quality Gate: Event Generation
 - ✅ All events align perfectly with frame boundaries
-- ✅ Flash/beep durations are frame-accurate for fractional rates
-- ✅ Sequence generation maintains MLS properties with exact timing
-- ✅ 11 comprehensive tests pass for fractional event generation
-- ✅ Exact rational arithmetic prevents timing drift
-- ✅ NTSC frame rates generate precise event sequences
-- ✅ Integration verified: events → flash sequences → beep sequences
-- ✅ Backward compatibility maintained with integer frame rates
+- ✅ Flash/beep durations are frame-accurate
+- ✅ Sequence generation maintains MLS properties
+- ✅ Hypothesis confirms timing precision across all supported rates
+- ✅ Generated sequences are reproducible
 
 ### Phase 4 Quality Gate: CLI Integration
 - ✅ All broadcast shortcuts work correctly
@@ -864,13 +884,23 @@ This ensures the test measures synchronization accuracy at the actual playback f
 3. ✅ pytest for test execution
 4. ✅ Coverage.py for test coverage measurement
 
+### Phase Durations (Estimated)
+- **Phase -1**: 2-3 days (Python 3 porting)
+- **Phase 0**: 3-5 days (test current code)
+- **Phase 1**: 2-3 days (frame rate parsing)
+- **Phase 2**: 2-3 days (timing calculations)
+- **Phase 3**: 3-4 days (event generation)
+- **Phase 4**: 2-3 days (CLI integration)
+- **Phase 5**: 2-3 days (end-to-end integration)
+- **Total**: 16-24 days
+
 ### Dependencies
-- **Phase 2** depends on Phase 1 completion (Python 3 required for modern testing)
-- Phase 3 depends on Phase 2 completion
-- Phase 4 depends on Phase 3 frame rate parsing
-- Phase 5 depends on Phase 4 timing calculations
-- Phase 6 can be developed in parallel with Phase 5
-- Phase 7 requires all previous phases
+- **Phase 0** depends on Phase -1 completion (Python 3 required for modern testing)
+- Phase 1 depends on Phase 0 completion
+- Phase 2 depends on Phase 1 frame rate parsing
+- Phase 3 depends on Phase 2 timing calculations
+- Phase 4 can be developed in parallel with Phase 3
+- Phase 5 requires all previous phases
 
 ## Conclusion
 
