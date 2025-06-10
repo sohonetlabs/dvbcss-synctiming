@@ -470,7 +470,7 @@ def test_duration_calculation_properties(n_frames, fps_num, fps_den):
     assert duration == expected
 ```
 
-### Phase 5: Flash/Beep Timing Generation
+### Phase 5: Flash/Beep Timing Generation ✅ COMPLETED
 
 #### Step 3.1: Event Generation Tests (RED → GREEN → REFACTOR)
 
@@ -750,12 +750,15 @@ def test_professional_format_generation(format_spec):
 - ✅ Round-trip conversions maintain identity or near-identity
 - ✅ All mathematical properties verified by property-based testing
 
-### Phase 3 Quality Gate: Event Generation
+### Phase 3 Quality Gate: Event Generation ✅ COMPLETED
 - ✅ All events align perfectly with frame boundaries
-- ✅ Flash/beep durations are frame-accurate
-- ✅ Sequence generation maintains MLS properties
-- ✅ Hypothesis confirms timing precision across all supported rates
-- ✅ Generated sequences are reproducible
+- ✅ Flash/beep durations are frame-accurate for fractional rates
+- ✅ Sequence generation maintains MLS properties with exact timing
+- ✅ 11 comprehensive tests pass for fractional event generation
+- ✅ Exact rational arithmetic prevents timing drift
+- ✅ NTSC frame rates generate precise event sequences
+- ✅ Integration verified: events → flash sequences → beep sequences
+- ✅ Backward compatibility maintained with integer frame rates
 
 ### Phase 4 Quality Gate: CLI Integration
 - ✅ All broadcast shortcuts work correctly
