@@ -57,7 +57,7 @@ def lfsr(bitLen, polycoeffs, iterationLimit=None):
         
         mls = lfsr(bits, polyCoeffs, iterationLimit=7)
         for bit in mls:
-            print bit
+            print(bit)
         1
         0
         1

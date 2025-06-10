@@ -29,13 +29,13 @@ try:
     from PIL import ImageDraw
     from PIL import ImageFont
 except ImportError:
-    print >> sys.stderr, "\n".join([
+    print("\n".join([
         "",
         "Error importing PIL (Python Image Library). Is it installed? Suggest installing using PIP, e.g.:",
         "",
         "    sudo pip install pillow\n",
         ""
-        ])
+        ]), file=sys.stderr)
     sys.exit(1)
 
 
@@ -92,7 +92,9 @@ class AspectPreservingCoordinateScaler(object):
     bounding box would be centred within the output bounding box.
     """
 
-    def __init__(self, (inputWidth, inputHeight), (outputWidth, outputHeight)):
+    def __init__(self, input_size, output_size):
+        inputWidth, inputHeight = input_size
+        outputWidth, outputHeight = output_size
         super(AspectPreservingCoordinateScaler,self).__init__()
 
         # work out how much we need to shrink/enlarge input coordinates to make
@@ -110,7 +112,8 @@ class AspectPreservingCoordinateScaler(object):
         self.xOffset = xGap / 2.0
         self.yOffset = yGap / 2.0
 
-    def xy(self, (x,y)):
+    def xy(self, point):
+        x, y = point
         """Translate (x,y) coordinate"""
         x = x * self.scale + self.xOffset
         y = y * self.scale + self.yOffset
@@ -142,8 +145,8 @@ def loadFont(sizePt):
 
 
 FIELD_INDICATOR = [
-    unichr(0x25cb)+u"1",     # hollow circle, '1'
-    unichr(0x25cf)+u"2",     # filled circle, '2'
+    chr(0x25cb)+"1",     # hollow circle, '1'
+    chr(0x25cf)+"2",     # filled circle, '2'
 ]
 
 def frameNumToTimecode(n, fps, framesAreFields=False):
@@ -201,7 +204,8 @@ def precise_filled_pieslice(draw, xy, start, end, *options, **kwoptions):
         draw.polygon([centre, p1, p2, centre], *options, **kwoptions)
 
 
-def genFrameImages((widthPixels, heightPixels), flashColourGen, flashColourGenPipTrain, numFrames, FPS, superSamplingScale=8, BG_COLOUR=(0,0,0), TEXT_COLOUR=(255,255,255), GFX_COLOUR=(255,255,255), title="", TITLE_COLOUR=(255,255,255), FRAMES_AS_FIELDS=False, frameSkipChecker=None, segments=[]):
+def genFrameImages(size, flashColourGen, flashColourGenPipTrain, numFrames, FPS, superSamplingScale=8, BG_COLOUR=(0,0,0), TEXT_COLOUR=(255,255,255), GFX_COLOUR=(255,255,255), title="", TITLE_COLOUR=(255,255,255), FRAMES_AS_FIELDS=False, frameSkipChecker=None, segments=[]):
+    widthPixels, heightPixels = size
     """\
     Generator that yields PIL Image objects representing video frames, one at a time
 
