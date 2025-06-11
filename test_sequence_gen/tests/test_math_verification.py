@@ -6,6 +6,8 @@ This module verifies the mathematical correctness of all fractional frame rate
 calculations, ensuring precision and accuracy for broadcast standards.
 """
 
+import os
+import sys
 from decimal import Decimal, getcontext
 from fractions import Fraction
 
@@ -15,9 +17,6 @@ import pytest
 getcontext().prec = 50
 
 # Import our modules
-import os
-import sys
-
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
 from fractional_event_generation import genEventCentreTimesFractional

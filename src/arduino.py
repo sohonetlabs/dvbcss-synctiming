@@ -183,7 +183,7 @@ def writeCmdAndTimeRoundTrip(f, clock, cmd, captureTime=None):
     All returned Ardinio time values are in units of nanoseconds. The clock object times are in units of ticks of that clock.
     """
     t1 = clock.ticks
-    if captureTime != None:
+    if captureTime is not None:
         # concatenate and send as one string to reduce wait for the value of capture time on arduino
         cmd = cmd + chr(captureTime)
     f.write(cmd)

@@ -202,6 +202,8 @@ each in units of ticks of the synchronisation timeline.
 
 """
 
+import math
+
 # ---------------------------------------------------------------------------
 
 
@@ -331,7 +333,7 @@ class TimelineReconstructor(object):
         :returns: Corresponding time on the reconstructed timeline
         """
         
-        if at == None:
+        if at is None:
             at = parentTime
         
         # first find the control timestamp "most recent" and the one after
@@ -564,8 +566,6 @@ def detectBeeps(loSampleData, hiSampleData, minBeepDuration, holdCount):
 
 
 # ---------------------------------------------------------------------------
-
-import math
 
 
 class BeepFlashDetector(object):

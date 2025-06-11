@@ -306,7 +306,7 @@ def repackageSamples(pinsToMeasure, pinMap, nMilliBlocks, samples):
     i = 0
     for blk in range(0, nMilliBlocks):
         for channel in channels:
-            if channel != None:
+            if channel is not None:
                 channel["max"].append(ord(samples[i]))
                 i += 1
                 channel["min"].append(ord(samples[i]))

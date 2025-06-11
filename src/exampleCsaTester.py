@@ -334,7 +334,7 @@ def getWorstCaseDispersionFromDeviceUnderTest():
     """
 
     print()
-    dispersion = raw_input("Enter worst case dispersion from CSA seen during measurement (units of milliseconds):")
+    dispersion = input("Enter worst case dispersion from CSA seen during measurement (units of milliseconds):")
     return float(dispersion)*1000000.0
 
 
@@ -380,7 +380,7 @@ if __name__ == "__main__":
                             cmdParser.measurerTime)
 
         print()
-        raw_input("Press RETURN once CSA is connected and synchronising to this 'TV Device' server")
+        input("Press RETURN once CSA is connected and synchronising to this 'TV Device' server")
 
         # let the sync time line clock start ticking and inform any TS clients
         # the CSA will position the playback of the test video and start playing it.
