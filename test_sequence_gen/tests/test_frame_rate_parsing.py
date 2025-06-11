@@ -230,7 +230,6 @@ class TestFrameRateToFraction:
         assert frame_duration == expected_duration
         
         # Should be more precise than float arithmetic
-        float_duration = 1.0 / (30000.0 / 1001.0)
         fraction_duration_float = float(frame_duration)
         
         # Fraction should be more accurate

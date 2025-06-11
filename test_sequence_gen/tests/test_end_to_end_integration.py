@@ -181,7 +181,7 @@ class TestEndToEndIntegration:
         """Test that audio and video are properly synchronized"""
         with tempfile.TemporaryDirectory() as tmpdir:
             # Generate with known event times
-            result = generate_fractional_test_sequence(
+            generate_fractional_test_sequence(
                 fps_rational=(30000, 1001),
                 size=(640, 480),
                 duration_secs=2,
@@ -261,7 +261,7 @@ class TestEndToEndIntegration:
             # Use a fractional rate with known precision requirements
             fps_num, fps_den = 24000, 1001
             
-            result = generate_fractional_test_sequence(
+            generate_fractional_test_sequence(
                 fps_rational=(fps_num, fps_den),
                 size=(640, 480),
                 duration_secs=5,
@@ -415,7 +415,7 @@ class TestBackwardCompatibility:
     def test_metadata_backward_compatibility_fields(self):
         """Test that all original metadata fields are present"""
         with tempfile.TemporaryDirectory() as tmpdir:
-            result = generate_fractional_test_sequence(
+            generate_fractional_test_sequence(
                 fps_rational=(30000, 1001),
                 size=(1280, 720),
                 duration_secs=1,

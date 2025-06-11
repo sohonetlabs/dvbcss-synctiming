@@ -182,9 +182,6 @@ class TestModuleInteroperability:
             assert len(beep_seq) == expected_samples, "Audio sample count should match duration"
             
             # Verify timing relationship
-            frame_duration = 1.0 / fps
-            sample_duration = 1.0 / sample_rate
-            
             # Each frame corresponds to specific samples
             samples_per_frame = sample_rate // fps
             assert samples_per_frame > 0, "Should have multiple samples per frame"
@@ -193,8 +190,6 @@ class TestModuleInteroperability:
         """Test that timing calculations are consistent across modules"""
         for fps in supported_fps_rates[:3]:  # Test subset for speed
             # Test frame-to-time conversions
-            frame_duration = 1.0 / fps
-            
             # One second should equal fps frames
             one_second_frames = fps
             timecode = frameNumToTimecode(one_second_frames, fps)

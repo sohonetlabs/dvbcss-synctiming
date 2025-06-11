@@ -200,7 +200,8 @@ class Test_timesForSamples(unittest.TestCase):
 
     def test_timesForSamples(self):
         numSamples = 10
-        acToStFunc= lambda x: (x*10 + 1000, 7)
+        def acToStFunc(x):
+            return (x*10 + 1000, 7)
         acFirstSampleStart=58
         acLastSampleEnd=78
         timesAndErrors=timesForSamples(numSamples, acToStFunc, acFirstSampleStart, acLastSampleEnd)
@@ -251,10 +252,17 @@ class Test_ArduinoToSyncTimelineTime(unittest.TestCase):
 
     def test_simple(self):
     
-        convAcWc  = lambda aNanos : (aNanos - 100000000) * 1.002 + 200000000
-        calcAcErr = lambda aNanos : 144000   # 144 us
-        convWcSt  = lambda wcNanos : (wcNanos - 200000000) * 90000 / 1002000000 + 50000
-        wcDispCalc = lambda wcNanos : 0.5*1000000    # 0.5 ms
+        def convAcWc(aNanos):
+            return (aNanos - 100000000) * 1.002 + 200000000
+        
+        def calcAcErr(aNanos):
+            return 144000   # 144 us
+        
+        def convWcSt(wcNanos):
+            return (wcNanos - 200000000) * 90000 / 1002000000 + 50000
+        
+        def wcDispCalc(wcNanos):
+            return 0.5*1000000    # 0.5 ms
         stTickRate = 90000.0
         ac2st = ArduinoToSyncTimelineTime(convAcWc, calcAcErr, convWcSt, wcDispCalc, stTickRate)
 
@@ -268,13 +276,15 @@ class Test_ArduinoToSyncTimelineTime(unittest.TestCase):
 
 
     def testValuesUsedWithinRangeOnly(self):
-        convAcWc  = lambda aNanos : (aNanos - 100000000) * 1.002 + 200000000
+        def convAcWc(aNanos):
+            return (aNanos - 100000000) * 1.002 + 200000000
         
         def calcAcErr(aNanos):
             self.assertTrue(aNanos >= 100000000 and aNanos <= 112000000)
             return 144000        
         
-        convWcSt  = lambda wcNanos : (wcNanos - 200000000) * 90000 / 1002000000 + 50000
+        def convWcSt(wcNanos):
+            return (wcNanos - 200000000) * 90000 / 1002000000 + 50000
         
         def wcDispCalc(wcNanos):
             self.assertTrue(wcNanos >= 200000000 and wcNanos <= 212024000)

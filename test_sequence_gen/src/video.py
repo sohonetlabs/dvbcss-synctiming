@@ -186,7 +186,6 @@ def precise_filled_pieslice(draw, xy, start, end, *options, **kwoptions):
 
     centre = (x1+x2)/2.0, (y1+y2)/2.0
     xrad = abs((x2-x1)/2.0)
-    yrad = abs((y2-y1)/2.0)
 
     if start != startInt:
         p1 = centre[0] + xrad * math.cos(math.radians(start)), \

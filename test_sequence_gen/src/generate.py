@@ -401,7 +401,8 @@ if __name__ == "__main__":
             return frameFilenames % tuple([n] * numNumberSubstitutions)
 
         if SKIP_IF_EXISTS:
-            skipChecker = lambda n : os.path.isfile(genFrameFilename(n))
+            def skipChecker(n):
+                return os.path.isfile(genFrameFilename(n))
         else:
             skipChecker = None
 

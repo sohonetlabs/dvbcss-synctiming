@@ -88,11 +88,9 @@ def generate_fractional_test_sequence(
     if field_based:
         effective_fps_num = fps_num * 2
         effective_fps_den = fps_den
-        frames_per_original = 2
     else:
         effective_fps_num = fps_num
         effective_fps_den = fps_den
-        frames_per_original = 1
     
     # Calculate adjusted duration for exact number of cycles
     # This ensures the pattern repeats perfectly
@@ -283,10 +281,6 @@ def main():
     """Main entry point for fractional frame rate test sequence generator."""
     
     # Default values (matching original generate.py)
-    default_fps = (50, 1)  # 50 fps
-    default_size = (854, 480)
-    default_window_len = 7
-    default_sample_rate = 48000
     
     # Default output paths
     default_audio_file = "build/audio.wav"

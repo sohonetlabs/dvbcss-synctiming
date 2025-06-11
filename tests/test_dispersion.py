@@ -42,7 +42,7 @@ class Test_DispersionRecorder(unittest.TestCase):
         algorithm = Mock_Algorithm()
         oldHookValue = algorithm.onClockAdjusted
         
-        recorder = DispersionRecorder(algorithm)
+        DispersionRecorder(algorithm)
         self.assertNotEqual(oldHookValue, algorithm.onClockAdjusted)
     
     
