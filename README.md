@@ -65,7 +65,7 @@ the [README](docs/README.md) in the [docs](docs) folder.
 
 ## Getting started
 
-The PC code is written primarily in Python 2.7 and will run under Windows,
+The PC code is written in Python 3 and will run under Windows,
 Linux or Mac OS X. It requires [pydvbcss](https://github.com/BBC/pydvbcss),
 [pyserial](http://pyserial.sourceforge.net/) and [pillow (a fork of
 PIL)](https://pillow.readthedocs.org/) libraries.
@@ -113,6 +113,12 @@ commands as root.
 
 Do this using the [video test sequence
 generator](test_sequence_gen/README.md) that is included in this project.
+
+The test sequence generator now supports **fractional frame rates** commonly used in broadcast:
+* 23.976 fps (NTSC film)
+* 29.97 fps (NTSC video)  
+* 59.94 fps (NTSC HD)
+* And many more professional formats
 
 The device being tested (TV Device or CSA) must play a video clip containing
 suitable beeps and flashes at defined times. The measurement system needs

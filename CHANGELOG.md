@@ -2,9 +2,22 @@
 
 ## Latest
 
+* Enhancement: Full Python 3 compatibility - migrated entire codebase from Python 2 to Python 3
+* Enhancement: Comprehensive fractional frame rate support (23.976, 29.97, 59.94 fps) for broadcast standards
+* Enhancement: Added broadcast shortcuts (--fps-ntsc-film, --fps-ntsc, --fps-pal) to test sequence generator
+* Enhancement: Added professional resolution presets (--size-4k-full, --size-hd-1080) for common formats
+* Enhancement: Added complete format presets (--preset-1080p59.94, --preset-cinema-4k) for one-command generation
+* Enhancement: Implemented exact rational arithmetic throughout for frame-perfect timing accuracy
 * Enhancement: Added support for fields (as opposed to frames) to the test sequence generator
 * Enhancement: Added support to test sequence generator for skipping generating frames already
   on the disk, to allow resumption of lengthy generation jobs if interrupted.
+* Improvement: Fixed all deprecated unittest assertion methods (assertEquals → assertEqual)
+* Improvement: Updated all imports to Python 3 standards
+* Improvement: Fixed tuple unpacking syntax for Python 3 compatibility
+* Improvement: Added comprehensive test coverage with 168+ tests using pytest and Hypothesis
+* Documentation: Added fractional frame rate guide (test_sequence_gen/README_FRACTIONAL.md)
+* Documentation: Added bit timing design documentation with visual diagrams
+* Documentation: Updated all code to use Apache License 2.0 headers consistently
 
 ## 0.3 : (02 Sep 2015) Flash/beep detection improvements, customisable test sequences and various bugfixes
 
