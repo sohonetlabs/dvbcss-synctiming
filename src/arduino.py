@@ -381,8 +381,8 @@ def bulkTransfer(f, clock):
 
 
 if __name__=="__main__":
-    print "This is a library of functions for communicating with the arduino"
-    print "for timing reference-point calibration for video and audio."
-    print
-    print "See source code for documentation"
-    print
+    print("This is a library of functions for communicating with the arduino")
+    print("for timing reference-point calibration for video and audio.")
+    print()
+    print("See source code for documentation")
+    print()
