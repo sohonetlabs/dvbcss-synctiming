@@ -46,19 +46,19 @@ from detect import (
 class Test_ConvertAtoB(unittest.TestCase):
     def test_a2b(self):
         a2b = ConvertAtoB( (100,10), (200, 20) )
-        self.assertEquals(a2b(150), 15.0)
-        self.assertEquals(a2b(100), 10.0)
-        self.assertEquals(a2b(200), 20.0)
-        self.assertEquals(a2b(133), 13.3)
+        self.assertEqual(a2b(150), 15.0)
+        self.assertEqual(a2b(100), 10.0)
+        self.assertEqual(a2b(200), 20.0)
+        self.assertEqual(a2b(133), 13.3)
         
         
 
 class Test_ErrorBoundInterpolator(unittest.TestCase):
     def testInterpolate(self):
         err = ErrorBoundInterpolator( (100, 0.5), (200, 0.7) )
-        self.assertEquals(err(100), 0.5)
-        self.assertEquals(err(150), 0.6)
-        self.assertEquals(err(200), 0.7)
+        self.assertEqual(err(100), 0.5)
+        self.assertEqual(err(150), 0.6)
+        self.assertEqual(err(200), 0.7)
  
     def testOutOfBounds(self):
         err = ErrorBoundInterpolator( (100, 0.5), (200, 0.7) )
@@ -80,8 +80,8 @@ class Test_calcAcWcCorrelationAndDispersion(unittest.TestCase):
         
         c,d = calcAcWcCorrelationAndDispersion( wcT1, acT2, acT3, wcT4, wcPrecision, acPrecision )
 
-        self.assertEquals(c, (1001, 120))
-        self.assertEquals(d, 38/2 + 5 + 2)
+        self.assertEqual(c, (1001, 120))
+        self.assertEqual(d, 38/2 + 5 + 2)
 
 
 
@@ -99,14 +99,14 @@ class Test_TimelineReconstructor(unittest.TestCase):
         reconstructor = TimelineReconstructor(history, parentTickRate, childTickRate, interpolate)
 
         # do tests, pretending we wind the clock back to when time was 120
-        self.assertEquals(reconstructor(150, at=120), 1500)
-        self.assertEquals(reconstructor(200, at=120), 2000)
+        self.assertEqual(reconstructor(150, at=120), 1500)
+        self.assertEqual(reconstructor(200, at=120), 2000)
         
         # now pretend we're after the 3rd observations - the relationship should have shifted
-        self.assertEquals(reconstructor(110, at=300), 1105)
+        self.assertEqual(reconstructor(110, at=300), 1105)
         
         # now pretend we're midway between 2nd and 3rd. Expect it to interpolate
-        self.assertEquals(reconstructor(110, at=250), 1102.5)
+        self.assertEqual(reconstructor(110, at=250), 1102.5)
         
         # cant reconstruct at a time before the first control timestamp was logged
         self.assertRaises(ValueError, reconstructor, 110, at=99)
@@ -121,8 +121,8 @@ class Test_calcThresholds(unittest.TestCase):
         
         rising, falling = calcFlashThresholds(loSampleData, hiSampleData)
         
-        self.assertEquals(rising, 6.0)
-        self.assertEquals(falling, 3.0)
+        self.assertEqual(rising, 6.0)
+        self.assertEqual(falling, 3.0)
 
     def testBeepThresholds(self):
         sampleEnvelope = [12, 16, 16, 11, 1, 2, 2, 3, 1, 8, 12, 17, 5, 1, 1, 2, 6, 14, 9, 13, 14, 3, 2, 1, 2, 11, 12, 14, 17]
@@ -147,7 +147,7 @@ class Test_detectPulses(unittest.TestCase):
         sampleData = [ 1, 8, 8, 0, 0, 0, 3, 8, 8, 7, 4, 1, 0, 1, 0, 7, 9, 1, 7, 9, 8, 3, 0, 0, 0, 8, 9 ]
         
         result = detectPulses(sampleData, risingThreshold, fallingThreshold, minPulseDuration, holdCount)
-        self.assertEquals(result, [8.0, 17.5])
+        self.assertEqual(result, [8.0, 17.5])
 
 
     def testSimpleBeepScenario(self):
@@ -167,7 +167,7 @@ class Test_detectPulses(unittest.TestCase):
 
         envelope = minMaxDataToEnvelopeData(loSampleData, hiSampleData)
         
-        self.assertEquals(envelope, [12, 16, 16, 11, 1, 2, 2, 3, 1, 8, 12, 17, 5, 1, 1, 2, 6, 14, 9, 13, 14, 3, 2, 1, 2, 11, 12, 14, 17])
+        self.assertEqual(envelope, [12, 16, 16, 11, 1, 2, 2, 3, 1, 8, 12, 17, 5, 1, 1, 2, 6, 14, 9, 13, 14, 3, 2, 1, 2, 11, 12, 14, 17])
 
         risingThreshold = 6
         fallingThreshold = 3
@@ -175,11 +175,11 @@ class Test_detectPulses(unittest.TestCase):
         holdCount = 0
 
         result = detectPulses(envelope, risingThreshold, fallingThreshold, minPulseDuration, holdCount)
-        self.assertEquals(result, [10.5, 18.0])
+        self.assertEqual(result, [10.5, 18.0])
 
         holdCount = 1
         result = detectPulses(envelope, risingThreshold, fallingThreshold, minPulseDuration, holdCount)
-        self.assertEquals(result, [10.5, 18.0])
+        self.assertEqual(result, [10.5, 18.0])
 
     def testNoisySamplesScenario(self):
 
@@ -192,7 +192,7 @@ class Test_detectPulses(unittest.TestCase):
         sampleData = [ 1, 8, 8, 0, 0, 0, 3, 8, 8, 7, 4, 1, 10, 1, 0, 7, 9, 1, 7, 9, 8, 3, 0, 0, 0, 8, 9 ]
         
         result = detectPulses(sampleData, risingThreshold, fallingThreshold, minPulseDuration, holdCount)
-        self.assertEquals(result, [8.0, 17.5])
+        self.assertEqual(result, [8.0, 17.5])
 
 
 
@@ -205,7 +205,7 @@ class Test_timesForSamples(unittest.TestCase):
         acLastSampleEnd=78
         timesAndErrors=timesForSamples(numSamples, acToStFunc, acFirstSampleStart, acLastSampleEnd)
 
-        self.assertEquals(timesAndErrors, [
+        self.assertEqual(timesAndErrors, [
             (1580, 7),
             (1600, 7),
             (1620, 7),
@@ -259,12 +259,12 @@ class Test_ArduinoToSyncTimelineTime(unittest.TestCase):
         ac2st = ArduinoToSyncTimelineTime(convAcWc, calcAcErr, convWcSt, wcDispCalc, stTickRate)
 
         stTime, stErr = ac2st(111000000)
-        self.assertEquals(stTime, 50990)
-        self.assertEquals(stErr, 90000*(144/1000000.0 + 0.5/1000.0) + 1)
+        self.assertEqual(stTime, 50990)
+        self.assertEqual(stErr, 90000*(144/1000000.0 + 0.5/1000.0) + 1)
 
         stTime, stErr = ac2st(101000000)
-        self.assertEquals(stTime, 50090)
-        self.assertEquals(stErr, 90000*(144/1000000.0 + 0.5/1000.0) + 1)
+        self.assertEqual(stTime, 50090)
+        self.assertEqual(stErr, 90000*(144/1000000.0 + 0.5/1000.0) + 1)
 
 
     def testValuesUsedWithinRangeOnly(self):
@@ -362,14 +362,14 @@ class Test_BeepFlashTimingDetector(unittest.TestCase):
         beepDurationSeconds = 3 / 1000 # one sample = 1 millisecond
         beepTimings = detector.samplesToBeepTimings(loSamples, hiSamples, acStartNanos, acEndNanos, beepDurationSeconds)
         
-        self.assertEquals(len(beepTimings), 1)
+        self.assertEqual(len(beepTimings), 1)
         ptsTime = beepTimings[0][0]
         error   = beepTimings[0][1]
         
-        self.assertEquals(ptsTime, 50495)
+        self.assertEqual(ptsTime, 50495)
         
         # check if error is equal to 1 pts tick + wcPrecision + acPrecision + acWcHalfRoundTrip + wcDispersion
-        self.assertEquals(error, 1+(wcPrecisionNanos+acPrecisionNanos+144*US+0.5*1000000+0.5*1000000)*90000/1000000000)
+        self.assertEqual(error, 1+(wcPrecisionNanos+acPrecisionNanos+144*US+0.5*1000000+0.5*1000000)*90000/1000000000)
         
 
 

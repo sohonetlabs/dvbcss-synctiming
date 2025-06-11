@@ -42,13 +42,13 @@ class Test_determineWithinTolerance(unittest.TestCase):
         
         tolerance = 15
         passFail,exceeds = determineWithinTolerance(diffsAndErrors, tolerance)
-        self.assertEquals(passFail,True)
-        self.assertEquals(exceeds, [0,0,0,0])
+        self.assertEqual(passFail,True)
+        self.assertEqual(exceeds, [0,0,0,0])
 
         tolerance = 3
         passFail,exceeds = determineWithinTolerance(diffsAndErrors, tolerance)
-        self.assertEquals(passFail,False)
-        self.assertEquals(exceeds, [5,0,0,0])
+        self.assertEqual(passFail,False)
+        self.assertEqual(exceeds, [5,0,0,0])
 
         diffsAndErrors = [
             (-20, 2),
@@ -59,17 +59,17 @@ class Test_determineWithinTolerance(unittest.TestCase):
         
         tolerance = 15
         passFail,exceeds = determineWithinTolerance(diffsAndErrors, tolerance)
-        self.assertEquals(passFail,False)
-        self.assertEquals(exceeds, [-3,-7,0,0])
+        self.assertEqual(passFail,False)
+        self.assertEqual(exceeds, [-3,-7,0,0])
 
 
 class Test_gapBetweenRanges(unittest.TestCase):
 
     def test_gapBetweenRanges(self):
         
-        self.assertEquals(-5, gapBetweenRanges((0,10),(15,25)))
-        self.assertEquals( 0, gapBetweenRanges((0,10),(9,20)))
-        self.assertEquals( 2, gapBetweenRanges((20,30),(10,18)))
+        self.assertEqual(-5, gapBetweenRanges((0,10),(15,25)))
+        self.assertEqual( 0, gapBetweenRanges((0,10),(9,20)))
+        self.assertEqual( 2, gapBetweenRanges((20,30),(10,18)))
         
 
 if __name__ == "__main__":

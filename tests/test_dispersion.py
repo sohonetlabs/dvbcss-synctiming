@@ -43,7 +43,7 @@ class Test_DispersionRecorder(unittest.TestCase):
         oldHookValue = algorithm.onClockAdjusted
         
         recorder = DispersionRecorder(algorithm)
-        self.assertNotEquals(oldHookValue, algorithm.onClockAdjusted)
+        self.assertNotEqual(oldHookValue, algorithm.onClockAdjusted)
     
     
     def test_notInitiallyRecording(self):
@@ -64,7 +64,7 @@ class Test_DispersionRecorder(unittest.TestCase):
 
         algorithm.onClockAdjusted( 1000, 0, 0, 100, 2 )
 
-        self.assertEquals(102, recorder.dispersionAt(1001))
+        self.assertEqual(102, recorder.dispersionAt(1001))
 
 
     def test_errorIfToEarly(self):
@@ -88,10 +88,10 @@ class Test_DispersionRecorder(unittest.TestCase):
         algorithm.onClockAdjusted( 2000, 3,  1994, 110, 2 )
         algorithm.onClockAdjusted( 3000, -2, 2114,  90, 3 )
 
-        self.assertEquals( 100+  2, recorder.dispersionAt(1001))
-        self.assertEquals( 100+100, recorder.dispersionAt(1050))
-        self.assertEquals( 110+ 12, recorder.dispersionAt(2006))
-        self.assertEquals(  90+  9, recorder.dispersionAt(3003))
+        self.assertEqual( 100+  2, recorder.dispersionAt(1001))
+        self.assertEqual( 100+100, recorder.dispersionAt(1050))
+        self.assertEqual( 110+ 12, recorder.dispersionAt(2006))
+        self.assertEqual(  90+  9, recorder.dispersionAt(3003))
 
 
 if __name__ == "__main__":

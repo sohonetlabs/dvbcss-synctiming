@@ -228,7 +228,7 @@ class Test_DoComparison(unittest.TestCase):
         result = correlate(expected, observed)
         (index, timeDiffsAndErrors) = result
         
-        self.assertEquals(index,30)
+        self.assertEqual(index,30)
         
         
         
@@ -251,7 +251,7 @@ class Test_DoComparison(unittest.TestCase):
         result = correlate(expected, observed)
         (index, timeDiffsAndErrors) = result
         
-        self.assertEquals(index,10)
+        self.assertEqual(index,10)
         
         
         

@@ -63,9 +63,9 @@ class Test_calcNearestDurationForExactNumberOfCycles(unittest.TestCase):
 
     def test_simple(self):
     
-        self.assertEquals(1,       calcNearestDurationForExactNumberOfCycles(1.0,     500))
-        self.assertEquals(2.0/3.0, calcNearestDurationForExactNumberOfCycles(0.5,       3))
-        self.assertEquals(0.0335,  calcNearestDurationForExactNumberOfCycles(1.0/30, 2000))
+        self.assertEqual(1,       calcNearestDurationForExactNumberOfCycles(1.0,     500))
+        self.assertEqual(2.0/3.0, calcNearestDurationForExactNumberOfCycles(0.5,       3))
+        self.assertEqual(0.0335,  calcNearestDurationForExactNumberOfCycles(1.0/30, 2000))
 
 
 class Test_genSequenceStartEnds(unittest.TestCase):
@@ -83,7 +83,7 @@ class Test_genSequenceStartEnds(unittest.TestCase):
         
         timings = list(timings)
         
-        self.assertEquals(timings, expectedTimings)
+        self.assertEqual(timings, expectedTimings)
 
 
 class Test_genSequenceFromSampleIndices(unittest.TestCase):
@@ -102,7 +102,7 @@ class Test_genSequenceFromSampleIndices(unittest.TestCase):
         gs=genSequenceFromSampleIndices(startEndTimings, gapGenFactory, eventGenFactory)
         data=list(itertools.islice(gs, 0, 30))
             
-        self.assertEquals(data, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0])
+        self.assertEqual(data, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0])
         
 
 
