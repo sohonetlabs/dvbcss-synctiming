@@ -48,7 +48,7 @@ def calcAndPrintStats(matchIndex, allExpectedTimes, diffsAndErrors, toleranceSec
     errorBounds = [err  for diff,err in diffsAndErrors]
     
     firstExpectedTime = allExpectedTimes[matchIndex]
-    print "First observed flash/beep matched to one expected at %.3f seconds into the test video sequence. There were %d readings recorded." % (firstExpectedTime, len(diffs))
+    print("First observed flash/beep matched to one expected at %.3f seconds into the test video sequence. There were %d readings recorded." % (firstExpectedTime, len(diffs)))
     
     avgOffsetMillis = secsToNearestMilli(calcMean(diffs))
     stdDevMillis    = secsToNearestMilli(calcVariance(diffs)**0.5)
@@ -60,45 +60,45 @@ def calcAndPrintStats(matchIndex, allExpectedTimes, diffsAndErrors, toleranceSec
     minEarlyLate = earlyLateString(minMillis)
     maxEarlyLate = earlyLateString(maxMillis)
     
-    print ""
-    print "Range of offsets between observed and expected:"
-    print "    Lowest        : %7d   milliseconds %s" % (minMillis, minEarlyLate)
-    print "    AVERAGE (mean): %7d   milliseconds %s" % (avgOffsetMillis, earlyLate)
-    print "    Highest       : %7d   milliseconds %s" % (maxMillis, maxEarlyLate)
-    print "    Std. deviation: %9.1f milliseconds" % stdDevMillis
+    print("")
+    print("Range of offsets between observed and expected:")
+    print("    Lowest        : %7d   milliseconds %s" % (minMillis, minEarlyLate))
+    print("    AVERAGE (mean): %7d   milliseconds %s" % (avgOffsetMillis, earlyLate))
+    print("    Highest       : %7d   milliseconds %s" % (maxMillis, maxEarlyLate))
+    print("    Std. deviation: %9.1f milliseconds" % stdDevMillis)
     
     errMeanMillis = calcMean(errorBounds) * 1000.0
     errMinMillis  = min(errorBounds) * 1000.0
     errMaxMillis  = max(errorBounds) * 1000.0
 
-    print
-    print "Total measurement error bounds (range of uncertainty):"
-    print "   Lowest        : %8.3f milliseconds" % errMinMillis
-    print "   Average (mean): %8.3f milliseconds" % errMeanMillis
-    print "   Highest       : %8.3f milliseconds" % errMaxMillis
+    print()
+    print("Total measurement error bounds (range of uncertainty):")
+    print("   Lowest        : %8.3f milliseconds" % errMinMillis)
+    print("   Average (mean): %8.3f milliseconds" % errMeanMillis)
+    print("   Highest       : %8.3f milliseconds" % errMaxMillis)
 
     if toleranceSecs is not None:
-        print ""
-        print "Accuracy tolerance specified of %.3f milliseconds" % (toleranceSecs*1000.0)
+        print("")
+        print("Accuracy tolerance specified of %.3f milliseconds" % (toleranceSecs*1000.0))
         
         success, exceeds = determineWithinTolerance(diffsAndErrors, toleranceSecs)
         
         if success:
-            print "    PASSED ... all observations within the tolerance interval"
-            print "               (after taking into account measurement error bounds)"
+            print("    PASSED ... all observations within the tolerance interval")
+            print("               (after taking into account measurement error bounds)")
         else:
             numFails = len([e for e in exceeds if e != 0])
-            print "    FAILED ... %d of %d observations outside the tolerance interval" % (numFails, len(diffs))
-            print "               (taking into account measurement error bounds)"
-            print ""
+            print("    FAILED ... %d of %d observations outside the tolerance interval" % (numFails, len(diffs)))
+            print("               (taking into account measurement error bounds)")
+            print("")
             i=0
             for e in exceeds:
                 i=i+1
                 if e != 0:
                     eMillis = e*1000.0
                     earlyLate = earlyLateString(eMillis)
-                    print "        Observation %d was outside tolerance and error margin by %.3f milliseconds %s" % (i, eMillis, earlyLate)
-        print ""
+                    print("        Observation %d was outside tolerance and error margin by %.3f milliseconds %s" % (i, eMillis, earlyLate))
+        print("")
 
 def calcMean(data):
     """\
@@ -193,9 +193,9 @@ def gapBetweenRanges(rangeA,rangeB):
         
 if __name__ == "__main__":
 
-    print "-----------------------------------------------------------------------"
-    print "Example of output when using calcAndPrintStats function in this module:"
-    print "-----------------------------------------------------------------------"
+    print("-----------------------------------------------------------------------")
+    print("Example of output when using calcAndPrintStats function in this module:")
+    print("-----------------------------------------------------------------------")
 
     index = 1
     allExpectedTimes = [ 1.0, 2.0, 3.0, 4.0, 5.0, 6.0 ]

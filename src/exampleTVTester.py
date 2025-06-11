@@ -181,10 +181,10 @@ def createCSSClientObjects(cmdParser):
     dispRecorder=DispersionRecorder(algorithm)
     dispRecorder.start()
 
-    print "Connecting, requesting timeline for:"
-    print "   Any contentId beginning with:", args.contentIdStem
-    print "   and using timeline selector: ", args.timelineSelector
-    print
+    print("Connecting, requesting timeline for:")
+    print("   Any contentId beginning with:", args.contentIdStem)
+    print("   and using timeline selector: ", args.timelineSelector)
+    print()
 
     ts = TSClientClockController(args.tsUrl[0], args.contentIdStem, args.timelineSelector, timelineClock, correlationChangeThresholdSecs=0.0)
     return (ts, timelineClock, args.timelineClockFrequency, wcClient, wallClock, wcPrecisionNanos, dispRecorder)
@@ -249,7 +249,7 @@ if __name__ == "__main__":
 
         measurer.setSyncTimeLinelockController(syncTimelineClockController)
 
-        print "Connecting..."
+        print("Connecting...")
         startCSSClients(wallClockClient, syncTimelineClockController)
 
         # wait for a few seconds as we try to connect to CSS-TS
@@ -260,10 +260,10 @@ if __name__ == "__main__":
             sys.stderr.write("\nTimed out trying to connect to CSS-TS. Aborting.\n\n")
             sys.exit(1)
 
-        print "Connected."
+        print("Connected.")
 
         # check we're receiving control timestamps for a valid timeline
-        print "Syncing to timeline..."
+        print("Syncing to timeline...")
         timeout = time.time() + TIMELINE_AVAILABLE_TIMEOUT
         while not syncTimelineClockController.timelineAvailable and time.time() < timeout:
             time.sleep(0.1)
@@ -271,7 +271,7 @@ if __name__ == "__main__":
             sys.stderr.write("\n\nWaited a while, but timeline was not available. Aborting.\n\n")
             sys.exit(1)
 
-        print "Synced to timeline."
+        print("Synced to timeline.")
 
         raw_input("Press RETURN once ready to begin measuring.")
 
@@ -283,8 +283,8 @@ if __name__ == "__main__":
             sys.exit(1)
 
 
-        print
-        print "Beginning to measure"
+        print()
+        print("Beginning to measure")
         measurer.capture()
 
         # sanity check we are still connected to the CSS-TS server
@@ -298,16 +298,16 @@ if __name__ == "__main__":
             try:
                 index, expected, timeDifferencesAndErrors = measurer.doComparison(channel)
 
-                print
-                print "Results for channel: %s" % channel["pinName"]
-                print "----------------------------"
+                print()
+                print("Results for channel: %s" % channel["pinName"])
+                print("----------------------------")
                 stats.calcAndPrintStats(index, expected, timeDifferencesAndErrors, cmdParser.args.toleranceSecs[0])
 
             except DubiousInput:
 
-                print
-                print "Cannot reliably measure on pin: %s" % channel["pinName"]
-                print "Is input plugged into pin?  Is the input level is too low?"
+                print()
+                print("Cannot reliably measure on pin: %s" % channel["pinName"])
+                print("Is input plugged into pin?  Is the input level is too low?")
 
     except KeyboardInterrupt:
         pass

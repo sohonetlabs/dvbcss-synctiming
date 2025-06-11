@@ -231,23 +231,23 @@ class TVTesterCmdLineParser(BaseCmdLineParser):
         print out the test setup
 
         """
-        print
-        print "Scenario setup:"
+        print()
+        print("Scenario setup:")
         for pin in self.pinsToMeasure:
-            print "   Measuring input %s using expected timings from : %s" % (pin, self.pinMetadataFilenames[pin][0])
-        print
-        print "   TS server at                          : %s" % self.args.tsUrl
-        print "   WC server at                          : %s" % self.args.wcUrl
-        print "   Content id stem asked of the TV       : %s" % self.args.contentIdStem
-        print "   Timeline selector asked of TV         : %s" % self.args.timelineSelector
-        print
-        print "   Assuming TV will be at start of video when timeline at : %d ticks" % (self.args.videoStartTicks)
-        print
-        print "   When go is pressed, will begin measuring immediately for %d seconds" % self.measurerTime
+            print("   Measuring input %s using expected timings from : %s" % (pin, self.pinMetadataFilenames[pin][0]))
+        print()
+        print("   TS server at                          : %s" % self.args.tsUrl)
+        print("   WC server at                          : %s" % self.args.wcUrl)
+        print("   Content id stem asked of the TV       : %s" % self.args.contentIdStem)
+        print("   Timeline selector asked of TV         : %s" % self.args.timelineSelector)
+        print()
+        print("   Assuming TV will be at start of video when timeline at : %d ticks" % (self.args.videoStartTicks))
+        print()
+        print("   When go is pressed, will begin measuring immediately for %d seconds" % self.measurerTime)
         print
         if self.args.toleranceSecs[0] is not None:
-            print "   Will report if TV is accurate within a tolerance of : %f milliseconds" % (self.args.toleranceSecs[0]*1000.0)
-            print
+            print("   Will report if TV is accurate within a tolerance of : %f milliseconds" % (self.args.toleranceSecs[0]*1000.0))
+            print()
 
 
 
@@ -301,24 +301,24 @@ class CsaTesterCmdLineParser(BaseCmdLineParser):
 
         """
 
-        print
-        print "Scenario setup:"
+        print()
+        print("Scenario setup:")
         for pin in self.pinsToMeasure:
-            print "   Measuring input %s using expected timings from : %s" % (pin, self.pinMetadataFilenames[pin][0])
-        print
-        print "   CII server at                 : %s" % ciiUrl
-        print "   TS server at                  : %s" % tsUrl
-        print "   WC server at                  : %s" % wcUrl
-        print "   Pretending to have content id : %s" % self.args.contentId
-        print "   Pretending to have timeline   : %s" % self.args.timelineSelector
-        print "   ... with tick rate            : %d/%d ticks per second" % (self.args.unitsPerSec, self.args.unitsPerTick)
-        print
-        print "   Will begin with timeline at                             : %d ticks" % (self.args.videoStartTicks)
-        print "   Assuming CSA will be at start of video when timeline at : %d ticks" % (self.args.videoStartTicks)
-        print
-        print "   When go is pressed, will wait for            : %f seconds" % self.args.waitSecs[0]
-        print "   ... then unpause the timeline and measure for: %d seconds" % self.measurerTime
+            print("   Measuring input %s using expected timings from : %s" % (pin, self.pinMetadataFilenames[pin][0]))
+        print()
+        print("   CII server at                 : %s" % ciiUrl)
+        print("   TS server at                  : %s" % tsUrl)
+        print("   WC server at                  : %s" % wcUrl)
+        print("   Pretending to have content id : %s" % self.args.contentId)
+        print("   Pretending to have timeline   : %s" % self.args.timelineSelector)
+        print("   ... with tick rate            : %d/%d ticks per second" % (self.args.unitsPerSec, self.args.unitsPerTick))
+        print()
+        print("   Will begin with timeline at                             : %d ticks" % (self.args.videoStartTicks))
+        print("   Assuming CSA will be at start of video when timeline at : %d ticks" % (self.args.videoStartTicks))
+        print()
+        print("   When go is pressed, will wait for            : %f seconds" % self.args.waitSecs[0])
+        print("   ... then unpause the timeline and measure for: %d seconds" % self.measurerTime)
         print
         if self.args.toleranceSecs[0] is not None:
-            print "   Will report if CSA is accurate within a tolerance of : %f milliseconds" % (self.args.toleranceSecs[0]*1000.0)
-            print
+            print("   Will report if CSA is accurate within a tolerance of : %f milliseconds" % (self.args.toleranceSecs[0]*1000.0))
+            print()

@@ -333,7 +333,7 @@ def getWorstCaseDispersionFromDeviceUnderTest():
     :returns dispersion value in units of nanoseconds
     """
 
-    print
+    print()
     dispersion = raw_input("Enter worst case dispersion from CSA seen during measurement (units of milliseconds):")
     return float(dispersion)*1000000.0
 
@@ -379,7 +379,7 @@ if __name__ == "__main__":
                             acPrecisionNanos, \
                             cmdParser.measurerTime)
 
-        print
+        print()
         raw_input("Press RETURN once CSA is connected and synchronising to this 'TV Device' server")
 
         # let the sync time line clock start ticking and inform any TS clients
@@ -388,14 +388,14 @@ if __name__ == "__main__":
         unpauseSyncTimelineClock(syncTimelineClock)
         servers["tsServer"][0].updateAllClients()
 
-        print "Timeline unpaused. Wait for ", cmdParser.args.waitSecs[0], " secs"
+        print("Timeline unpaused. Wait for ", cmdParser.args.waitSecs[0], " secs")
         # allow the device under test to settle
         time.sleep(cmdParser.args.waitSecs[0])
 
-        print "Beginning to measure"
+        print("Beginning to measure")
         measurer.capture()
 
-        print "Measurement complete. Timeline paused again."
+        print("Measurement complete. Timeline paused again.")
         pauseSyncTimelineClock(syncTimelineClock)
         servers["tsServer"][0].updateAllClients()
 
@@ -410,16 +410,16 @@ if __name__ == "__main__":
             try:
                 index, expected, timeDifferencesAndErrors = measurer.doComparison(channel)
 
-                print
-                print "Results for channel: %s" % channel["pinName"]
-                print "----------------------------"
+                print()
+                print("Results for channel: %s" % channel["pinName"])
+                print("----------------------------")
                 stats.calcAndPrintStats(index, expected, timeDifferencesAndErrors, cmdParser.args.toleranceSecs[0])
 
             except DubiousInput:
 
-                print
-                print "Cannot reliably measure on pin: %s" % channel["pinName"]
-                print "Is input plugged into pin?  Is the input level is too low?"
+                print()
+                print("Cannot reliably measure on pin: %s" % channel["pinName"])
+                print("Is input plugged into pin?  Is the input level is too low?")
 
     except KeyboardInterrupt:
         pass
