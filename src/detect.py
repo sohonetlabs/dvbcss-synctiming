@@ -182,7 +182,7 @@ in this module to perform the calculation:
     timings = func(loSampleData, hiSampleData, acStartNanos, acEndNanos)
       
     for (eventTime, errorBound) in timings:
-        print "Detected flash/beep at timeline tick value %f with error margin +/- %f ticks" % (eventTime, errorBound)
+        print("Detected flash/beep at timeline tick value %f with error margin +/- %f ticks" % (eventTime, errorBound))
 
       
 `timings` contains a list of tuples. Each tuple represents a detected
@@ -227,13 +227,13 @@ class ConvertAtoB(object):
             >>> a1b1 = (0,50)
             >>> a2b2 = (10,70)
             >>> convert = ConvertAtoB( a1b1, a2b2 )
-            >>> print convert(0)
+            >>> print(convert(0))
             50.0
-            >>> print convert(5)
+            >>> print(convert(5))
             60.0
-            >>> print convert(10)
+            >>> print(convert(10))
             70.0
-            >>> print convert(15)
+            >>> print(convert(15))
             80.0
         
         
@@ -518,7 +518,7 @@ def detectPulses(hiSampleData, risingThreshold, fallingThreshold, minPulseDurati
 
     # list currently contains intervals, convert to indices of the centre point (which might be at a halfway)
     # the end values are the positions where it went back to low, therefore the last high is end-1
-    pulseIndices = map(lambda interval : (interval[0]+(interval[1]-1))/2.0, pulseIntervals)
+    pulseIndices = list(map(lambda interval : (interval[0]+(interval[1]-1))/2.0, pulseIntervals))
     return pulseIndices
 
 
@@ -531,7 +531,7 @@ def minMaxDataToEnvelopeData(loSampleData, hiSampleData):
     :param loSampleData: list of sample values, where each value is the lowest seen during that sampling period
     :param loSampleData: list of sample values, where each value is the highest seen during that sampling period
     """
-    return map(lambda lo, hi: hi-lo, loSampleData, hiSampleData)
+    return list(map(lambda lo, hi: hi-lo, loSampleData, hiSampleData))
 
 
 def detectFlashes(loSampleData, hiSampleData, minFlashDuration, holdCount):

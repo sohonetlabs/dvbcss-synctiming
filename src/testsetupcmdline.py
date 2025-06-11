@@ -244,7 +244,7 @@ class TVTesterCmdLineParser(BaseCmdLineParser):
         print("   Assuming TV will be at start of video when timeline at : %d ticks" % (self.args.videoStartTicks))
         print()
         print("   When go is pressed, will begin measuring immediately for %d seconds" % self.measurerTime)
-        print
+        print()
         if self.args.toleranceSecs[0] is not None:
             print("   Will report if TV is accurate within a tolerance of : %f milliseconds" % (self.args.toleranceSecs[0]*1000.0))
             print()
@@ -318,7 +318,7 @@ class CsaTesterCmdLineParser(BaseCmdLineParser):
         print()
         print("   When go is pressed, will wait for            : %f seconds" % self.args.waitSecs[0])
         print("   ... then unpause the timeline and measure for: %d seconds" % self.measurerTime)
-        print
+        print()
         if self.args.toleranceSecs[0] is not None:
             print("   Will report if CSA is accurate within a tolerance of : %f milliseconds" % (self.args.toleranceSecs[0]*1000.0))
             print()

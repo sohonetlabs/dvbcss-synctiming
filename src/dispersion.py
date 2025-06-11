@@ -46,9 +46,9 @@ class DispersionRecorder(object):
             recorder.stop()   # not necessary, but will stop memory being filled!
             
             
-            t=int(raw_input("Enter a wall clock time:"))
+            t=int(input("Enter a wall clock time:"))
             disp = recorder.dispersionAt(t)
-            print "At wall clock time "+str(t)+", the dispersion was:",disp
+            print("At wall clock time "+str(t)+", the dispersion was:",disp)
             
         """
         super(DispersionRecorder,self).__init__()
