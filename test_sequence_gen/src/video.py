@@ -16,18 +16,17 @@
 
 import itertools
 import math
-import struct
 import sys
 
-from eventTimingGen import calcNearestDurationForExactNumberOfCycles
-from eventTimingGen import genSequenceStartEnds
-from eventTimingGen import secsToTicks
-from eventTimingGen import genSequenceFromSampleIndices
+from eventTimingGen import (
+    calcNearestDurationForExactNumberOfCycles,
+    genSequenceFromSampleIndices,
+    genSequenceStartEnds,
+    secsToTicks,
+)
 
 try:
-    from PIL import Image
-    from PIL import ImageDraw
-    from PIL import ImageFont
+    from PIL import Image, ImageDraw, ImageFont
 except ImportError:
     print("\n".join([
         "",

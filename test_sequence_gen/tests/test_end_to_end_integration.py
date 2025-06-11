@@ -12,24 +12,22 @@ Phase 7.1: End-to-End Integration Tests
 - Performance testing
 """
 
-import sys
-import os
-import pytest
 import json
+import os
+import sys
 import tempfile
-import subprocess
-from pathlib import Path
-from fractions import Fraction
 import wave
+from fractions import Fraction
+
+import pytest
 from PIL import Image
 
 # Add src directory to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
 # Import modules
-from generate_fractional import generate_fractional_test_sequence
 from cli_fractional_integration import parse_fractional_args
-from frame_timing import frame_to_seconds
+from generate_fractional import generate_fractional_test_sequence
 
 
 class TestEndToEndIntegration:

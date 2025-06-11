@@ -43,10 +43,12 @@ import math
 import struct
 import wave
 
-from eventTimingGen import calcNearestDurationForExactNumberOfCycles
-from eventTimingGen import genSequenceStartEnds
-from eventTimingGen import secsToTicks
-from eventTimingGen import genSequenceFromSampleIndices
+from eventTimingGen import (
+    calcNearestDurationForExactNumberOfCycles,
+    genSequenceFromSampleIndices,
+    genSequenceStartEnds,
+    secsToTicks,
+)
 
 
 def saveAsWavFile(seq, filename, sampleRateHz):

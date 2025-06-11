@@ -17,12 +17,11 @@ Key timing functions to test:
 - calculate_sequence_duration(n_frames, fps_num, fps_den) → total time
 """
 
-import sys
 import os
-import pytest
-from hypothesis import given, strategies as st, assume, settings
+import sys
 from fractions import Fraction
-import math
+
+import pytest
 
 # Add src directory to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
@@ -30,8 +29,11 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 # Import will fail initially - that's part of RED phase
 try:
     from frame_timing import (
-        frame_to_seconds, seconds_to_frame, calculate_frame_duration,
-        calculate_sequence_duration, validate_fps_rational
+        calculate_frame_duration,
+        calculate_sequence_duration,
+        frame_to_seconds,
+        seconds_to_frame,
+        validate_fps_rational,
     )
 except ImportError:
     # Expected during RED phase - timing module doesn't exist yet

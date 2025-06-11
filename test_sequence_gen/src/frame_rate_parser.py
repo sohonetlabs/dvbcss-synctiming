@@ -14,8 +14,7 @@ Phase 3.1: Frame Rate Parsing Implementation (GREEN phase)
 
 import re
 from fractions import Fraction
-from typing import Union, Tuple
-
+from typing import Tuple, Union
 
 # Mapping of common decimal frame rates to exact rationals
 DECIMAL_TO_RATIONAL = {

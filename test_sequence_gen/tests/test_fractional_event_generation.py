@@ -17,28 +17,26 @@ Key functionality to test:
 - fpsBitTimingsFractional integration → exact timing for fractional rates
 """
 
-import sys
 import os
-import pytest
-from hypothesis import given, strategies as st, assume, settings
+import sys
 from fractions import Fraction
-import math
+
+import pytest
 
 # Add src directory to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
 # Import current modules
+from frame_timing import calculate_frame_duration
 from generate import fpsBitTimings, genEventCentreTimes
-from video import genFlashSequence
-from audio import genBeepSequence
-from frame_rate_parser import parse_frame_rate
-from frame_timing import frame_to_seconds, calculate_frame_duration
 
 # Import will fail initially - that's part of RED phase
 try:
     from fractional_event_generation import (
-        genEventCentreTimesFractional, genFlashSequenceFractional,
-        genBeepSequenceFractional, createFpsBitTimingsFractional
+        createFpsBitTimingsFractional,
+        genBeepSequenceFractional,
+        genEventCentreTimesFractional,
+        genFlashSequenceFractional,
     )
 except ImportError:
     # Expected during RED phase - fractional module doesn't exist yet

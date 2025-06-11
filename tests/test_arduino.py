@@ -11,9 +11,9 @@
 Tests for arduino.py module Python 3 compatibility and functionality
 """
 
-import unittest
-import sys
 import os
+import sys
+import unittest
 
 # Add parent directory to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
@@ -25,7 +25,6 @@ class TestArduinoPython3Compatibility(unittest.TestCase):
     def test_module_imports(self):
         """Test that arduino module can be imported"""
         try:
-            import arduino
             self.assertTrue(True)
         except SyntaxError as e:
             self.fail(f"arduino module has Python 2 syntax errors: {e}")

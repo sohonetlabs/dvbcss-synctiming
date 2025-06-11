@@ -13,17 +13,19 @@ Phase 3.2: Hypothesis Property Tests for Frame Rate Parsing
 - Property 5: Round-trip conversion should preserve precision
 """
 
-import sys
-import os
-import pytest
 import math
-from hypothesis import given, strategies as st, assume, settings
+import os
+import sys
 from fractions import Fraction
+
+import pytest
+from hypothesis import assume, given, settings
+from hypothesis import strategies as st
 
 # Add src directory to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
-from frame_rate_parser import parse_frame_rate, get_broadcast_standard_fps
+from frame_rate_parser import get_broadcast_standard_fps, parse_frame_rate
 
 
 class TestFrameRateParserProperties:

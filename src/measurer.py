@@ -20,11 +20,11 @@ from an arduino and analyse them.
 
 '''
 
+
+import analyse
 import arduino
 import detect
-import analyse
-import time
-import sys
+
 
 class DubiousInput(Exception):
 

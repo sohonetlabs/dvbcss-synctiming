@@ -34,7 +34,6 @@ Includes:
 """
 
 
-import itertools
 
 
 def lfsr(bitLen, polycoeffs, iterationLimit=None):

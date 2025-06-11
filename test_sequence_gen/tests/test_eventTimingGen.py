@@ -19,17 +19,21 @@ Unit-tests for eventTimingGen.py
 """
 
 import sys
+
 sys.path.append("../src")
 
 
-import unittest
 import itertools
+import unittest
 
-from eventTimingGen import mls
-from eventTimingGen import _mls_taps
-from eventTimingGen import calcNearestDurationForExactNumberOfCycles
-from eventTimingGen import genSequenceStartEnds
-from eventTimingGen import genSequenceFromSampleIndices
+from eventTimingGen import (
+    _mls_taps,
+    calcNearestDurationForExactNumberOfCycles,
+    genSequenceFromSampleIndices,
+    genSequenceStartEnds,
+    mls,
+)
+
 
 class Test_mls(unittest.TestCase):
 

@@ -13,29 +13,29 @@ Phase 7: End-to-End Integration
 - Maintains backward compatibility
 """
 
-import sys
-import os
-import argparse
 import json
+import sys
 from pathlib import Path
-from fractions import Fraction
-from typing import Tuple, List, Dict, Any, Optional
+from typing import Any, Dict, Optional, Tuple
 
-# Import existing modules
-from eventTimingGen import _mls_taps, calcNearestDurationForExactNumberOfCycles
 from audio import saveAsWavFile
-from video import genFrameImages
 
 # Import fractional modules
 from cli_fractional_integration import (
-    parse_fractional_args, create_fractional_metadata,
-    format_fps_display
+    create_fractional_metadata,
+    format_fps_display,
+    parse_fractional_args,
 )
+
+# Import existing modules
+from eventTimingGen import _mls_taps, calcNearestDurationForExactNumberOfCycles
 from fractional_event_generation import (
-    genEventCentreTimesFractional, genFlashSequenceFractional,
-    genBeepSequenceFractional, createFpsBitTimingsFractional
+    genBeepSequenceFractional,
+    genEventCentreTimesFractional,
+    genFlashSequenceFractional,
 )
-from frame_timing import frame_to_seconds, calculate_frame_duration
+from frame_timing import calculate_frame_duration
+from video import genFrameImages
 
 
 def generate_fractional_test_sequence(

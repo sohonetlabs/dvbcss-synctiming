@@ -13,22 +13,26 @@ Phase 6.2: Hypothesis Property Tests for CLI
 - CLI robustness testing
 """
 
-import sys
 import os
-import pytest
-from hypothesis import given, strategies as st, assume, settings
-from fractions import Fraction
 import re
+import sys
+
+import pytest
+from hypothesis import assume, given, settings
+from hypothesis import strategies as st
 
 # Add src directory to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
 # Import modules
-from frame_rate_parser import parse_frame_rate, get_broadcast_standard_fps
 from cli_fractional_integration import (
-    parse_fractional_args, create_fractional_metadata,
-    get_resolution_preset, get_format_preset, BROADCAST_SHORTCUTS,
-    RESOLUTION_PRESETS, FORMAT_PRESETS
+    BROADCAST_SHORTCUTS,
+    FORMAT_PRESETS,
+    RESOLUTION_PRESETS,
+    create_fractional_metadata,
+    get_format_preset,
+    get_resolution_preset,
+    parse_fractional_args,
 )
 
 

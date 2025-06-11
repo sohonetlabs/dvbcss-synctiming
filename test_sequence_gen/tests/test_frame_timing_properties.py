@@ -13,21 +13,23 @@ Phase 4.2: Hypothesis Property Tests for Frame Timing
 - Property 5: Precision should be exact for rational arithmetic
 """
 
-import sys
 import os
-import pytest
-import math
-from hypothesis import given, strategies as st, assume, settings
+import sys
 from fractions import Fraction
+
+import pytest
+from hypothesis import assume, given, settings
+from hypothesis import strategies as st
 
 # Add src directory to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
 from frame_timing import (
-    frame_to_seconds, seconds_to_frame, calculate_frame_duration,
-    calculate_sequence_duration, validate_fps_rational
+    calculate_frame_duration,
+    calculate_sequence_duration,
+    frame_to_seconds,
+    seconds_to_frame,
 )
-
 
 # Strategy for valid frame rate rationals
 valid_fps_rationals = st.one_of([

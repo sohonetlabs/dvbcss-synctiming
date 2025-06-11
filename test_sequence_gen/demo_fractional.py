@@ -6,16 +6,15 @@ This script demonstrates the new fractional frame rate capabilities
 added to the DVB CSS synchronization timing measurement system.
 """
 
-import sys
 import os
+import sys
 import tempfile
-from pathlib import Path
 
 # Add src directory to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
+from cli_fractional_integration import format_fps_display, parse_fractional_args
 from generate_fractional import generate_fractional_test_sequence
-from cli_fractional_integration import parse_fractional_args, format_fps_display
 
 
 def demo_basic_fractional():

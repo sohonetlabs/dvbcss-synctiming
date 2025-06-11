@@ -19,6 +19,7 @@ Unit-tests for video.py
 """
 
 import sys
+
 sys.path.append("../src")
 
 

@@ -8,19 +8,18 @@ for the existing integer frame rate support.
 Phase 2.4: Integration testing to ensure all components work together.
 """
 
-import sys
-import os
-import pytest
-from hypothesis import given, strategies as st, assume, settings
-import tempfile
 import json
+import os
+import sys
+
+import pytest
 
 # Add src directory to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
-from generate import genEventCentreTimes, fpsBitTimings
-from video import genFlashSequence, frameNumToTimecode
 from audio import genBeepSequence
+from generate import fpsBitTimings, genEventCentreTimes
+from video import frameNumToTimecode, genFlashSequence
 
 
 class TestCompleteWorkflowIntegration:

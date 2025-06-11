@@ -11,18 +11,19 @@ Phase 2: RED → GREEN → REFACTOR approach
 - REFACTOR: Improve code while keeping tests green
 """
 
-import sys
 import os
+import sys
+
 import pytest
-from hypothesis import given, strategies as st, assume, settings
-import math
+from hypothesis import assume, given, settings
+from hypothesis import strategies as st
 
 # Add src directory to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
+from eventTimingGen import mls
 from generate import fpsBitTimings, genEventCentreTimes
 from video import frameNumToTimecode
-from eventTimingGen import mls
 
 
 class TestCurrentFrameRateSupport:

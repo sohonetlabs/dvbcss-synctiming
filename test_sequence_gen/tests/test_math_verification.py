@@ -6,25 +6,28 @@ This module verifies the mathematical correctness of all fractional frame rate
 calculations, ensuring precision and accuracy for broadcast standards.
 """
 
-import pytest
-from fractions import Fraction
 from decimal import Decimal, getcontext
-import math
+from fractions import Fraction
+
+import pytest
 
 # Set high precision for decimal calculations
 getcontext().prec = 50
 
 # Import our modules
-import sys
 import os
+import sys
+
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
+from fractional_event_generation import genEventCentreTimesFractional
 from frame_rate_parser import parse_frame_rate
 from frame_timing import (
-    frame_to_seconds, seconds_to_frame, calculate_frame_duration,
-    calculate_sequence_duration
+    calculate_frame_duration,
+    calculate_sequence_duration,
+    frame_to_seconds,
+    seconds_to_frame,
 )
-from fractional_event_generation import genEventCentreTimesFractional
 
 
 # Helper functions for the tests

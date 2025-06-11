@@ -11,9 +11,9 @@
 Tests for tuple unpacking fixes in detect.py
 """
 
-import unittest
-import sys
 import os
+import sys
+import unittest
 
 # Add parent directory to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))

@@ -14,14 +14,14 @@ Phase 5.1: Fractional Event Generation Implementation (GREEN phase)
 """
 
 from fractions import Fraction
-from typing import Iterator, Tuple, List, Union
-import itertools
+from typing import Iterator, List, Tuple, Union
 
 # Import existing modules
-from eventTimingGen import mls, encodeBitStreamAsPulseTimings
+from eventTimingGen import encodeBitStreamAsPulseTimings, mls
 from frame_timing import (
-    frame_to_seconds, seconds_to_frame, calculate_frame_duration,
-    validate_fps_rational
+    calculate_frame_duration,
+    frame_to_seconds,
+    validate_fps_rational,
 )
 
 

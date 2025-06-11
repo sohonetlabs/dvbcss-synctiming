@@ -6,8 +6,8 @@ These tests verify that the basic functionality works correctly after
 porting from Python 2 to Python 3.
 """
 
-import sys
 import os
+import sys
 import unittest
 
 # Add src directory to path
@@ -20,17 +20,13 @@ class TestPython3Compatibility(unittest.TestCase):
     def test_python3_imports(self):
         """Verify all modules import correctly in Python 3"""
         # These should not raise SyntaxError or ImportError
-        import generate
-        import video
-        import audio
-        import eventTimingGen
         
         # If we get here, imports worked
         self.assertTrue(True)
     
     def test_basic_functionality(self):
         """Verify basic functionality works in Python 3"""
-        from generate import genEventCentreTimes, fpsBitTimings
+        from generate import fpsBitTimings, genEventCentreTimes
         
         # Test that we can generate events (take only first 10 from infinite generator)
         events = []

@@ -16,18 +16,18 @@ The parser should handle:
 - Broadcast shortcuts: "ntsc-film" → (24000, 1001)
 """
 
-import sys
 import os
-import pytest
-from hypothesis import given, strategies as st, assume, settings
+import sys
 from fractions import Fraction
+
+import pytest
 
 # Add src directory to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
 # Import will fail initially - that's part of RED phase
 try:
-    from frame_rate_parser import parse_frame_rate, get_broadcast_standard_fps
+    from frame_rate_parser import get_broadcast_standard_fps, parse_frame_rate
 except ImportError:
     # Expected during RED phase - parser doesn't exist yet
     parse_frame_rate = None

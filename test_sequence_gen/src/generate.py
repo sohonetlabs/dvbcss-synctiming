@@ -40,17 +40,15 @@ beeps/flashes anywhere else in the sequence.
 
 """
 
-from eventTimingGen import mls, _mls_taps
-from eventTimingGen import encodeBitStreamAsPulseTimings
-from eventTimingGen import calcNearestDurationForExactNumberOfCycles
-from eventTimingGen import genSequenceStartEnds
-from eventTimingGen import genSequenceFromSampleIndices
-from eventTimingGen import secsToTicks
+import re
 
 from audio import genBeepSequence, saveAsWavFile
+from eventTimingGen import (
+    _mls_taps,
+    encodeBitStreamAsPulseTimings,
+    mls,
+)
 from video import genFlashSequence, genFrameImages
-
-import re
 
 # timings for how we will generate pulses depending on framerates
 # each bit is represented by pulse(s). The first always occurs at the same
@@ -159,9 +157,9 @@ def parseSEGMENT(arg):
 if __name__ == "__main__":
 
     import argparse
-    import sys
-    import os
     import json
+    import os
+    import sys
 
     # defaults
     FPS         = 50

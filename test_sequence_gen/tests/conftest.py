@@ -6,7 +6,7 @@ for testing the test sequence generation functionality.
 """
 
 import pytest
-from hypothesis import settings, Verbosity
+from hypothesis import Verbosity, settings
 
 # Configure Hypothesis for thorough testing
 settings.register_profile("default", 

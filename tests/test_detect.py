@@ -20,25 +20,28 @@ Unit-tests for code that maps timings from arduino to synchronisation timeline
 and also code that does the pulse detection.
 """
 
-import sys
 import os
+import sys
+
 sys.path.append(os.path.dirname(os.path.abspath(__file__))+"/../src")
 
 
-from detect import ConvertAtoB
-from detect import ErrorBoundInterpolator
-from detect import calcAcWcCorrelationAndDispersion
-from detect import TimelineReconstructor
-from detect import calcFlashThresholds
-from detect import calcBeepThresholds
-from detect import detectPulses
-from detect import minMaxDataToEnvelopeData
-from detect import timesForSamples
-from detect import ArduinoToSyncTimelineTime
-from detect import BeepFlashDetector
-
-
 import unittest
+
+from detect import (
+    ArduinoToSyncTimelineTime,
+    BeepFlashDetector,
+    ConvertAtoB,
+    ErrorBoundInterpolator,
+    TimelineReconstructor,
+    calcAcWcCorrelationAndDispersion,
+    calcBeepThresholds,
+    calcFlashThresholds,
+    detectPulses,
+    minMaxDataToEnvelopeData,
+    timesForSamples,
+)
+
 
 class Test_ConvertAtoB(unittest.TestCase):
     def test_a2b(self):

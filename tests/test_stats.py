@@ -19,15 +19,14 @@
 Unit-tests for code that does statistics output
 """
 
+import os
+import sys
 import unittest
 
-import sys
-import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__))+"/../src")
 
 
-from stats import determineWithinTolerance
-from stats import gapBetweenRanges
+from stats import determineWithinTolerance, gapBetweenRanges
 
 
 class Test_determineWithinTolerance(unittest.TestCase):

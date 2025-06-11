@@ -13,15 +13,13 @@ Phase 6.1: CLI Integration Implementation (GREEN phase)
 """
 
 import argparse
-import sys
 import re
-from typing import Tuple, Dict, Any, List, Union
 from fractions import Fraction
+from typing import Any, Dict, List, Tuple
 
 # Import our modules
-from frame_rate_parser import parse_frame_rate, get_broadcast_standard_fps
+from frame_rate_parser import get_broadcast_standard_fps, parse_frame_rate
 from frame_timing import validate_fps_rational
-
 
 # Resolution presets for professional formats
 RESOLUTION_PRESETS = {

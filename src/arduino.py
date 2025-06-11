@@ -68,8 +68,8 @@ the command. See individual documentation for each.
 
 """
 
-import sys
 import re
+import sys
 
 try:
     import serial

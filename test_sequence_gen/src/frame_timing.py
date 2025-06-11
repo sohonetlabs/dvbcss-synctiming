@@ -14,9 +14,7 @@ Phase 4.1: Frame Timing Calculations Implementation (GREEN phase)
 """
 
 from fractions import Fraction
-from typing import Union, Tuple
-import math
-
+from typing import Union
 
 # Reasonable frame rate bounds for validation
 MIN_FRAME_RATE = 0.1  # 0.1 fps minimum

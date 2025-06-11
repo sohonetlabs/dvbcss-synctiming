@@ -19,13 +19,13 @@ Unit-tests for audio.py
 """
 
 import sys
+
 sys.path.append("../src")
 
 
 import unittest
 
 from audio import GenTone
-
 
 # ---------------------------------------------------------------------------
 

@@ -18,25 +18,24 @@ Key functionality to test:
 - Integration with existing generate.py workflow
 """
 
-import sys
-import os
-import pytest
-import tempfile
-import subprocess
 import json
-from pathlib import Path
+import os
+import sys
+
+import pytest
 
 # Add src directory to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
 # Import current modules
-from frame_rate_parser import parse_frame_rate, get_broadcast_standard_fps
 
 # Import will fail initially - that's part of RED phase
 try:
     from cli_fractional_integration import (
-        parse_fractional_args, create_fractional_metadata,
-        get_resolution_preset, get_format_preset
+        create_fractional_metadata,
+        get_format_preset,
+        get_resolution_preset,
+        parse_fractional_args,
     )
 except ImportError:
     # Expected during RED phase - CLI integration module doesn't exist yet
