@@ -206,7 +206,7 @@ each in units of ticks of the synchronisation timeline.
 
 
 class ConvertAtoB(object):
-    def __init__(self, (a1, b1), (a2, b2)):
+    def __init__(self, point1, point2):
         """\
         Returns a function that maps from reference frame A to reference frame B
         where the relationship is defined by a straight line passing through
@@ -243,6 +243,8 @@ class ConvertAtoB(object):
         :returns: A function that takes a value in reference frame A as an argument and returns the corresponding value in reference frame B.
         """
         super(ConvertAtoB, self).__init__()
+        a1, b1 = point1
+        a2, b2 = point2
         self.a1, self.b1 = (a1, b1)
         self.a2, self.b2 = (a2, b2)
     
@@ -252,7 +254,7 @@ class ConvertAtoB(object):
 
 
 class ErrorBoundInterpolator(object):
-    def __init__(self, (v1, e1), (v2, e2)):
+    def __init__(self, point1, point2):
         """\
         Given to different points at which readings were taken and the error bounds
         of those readings at those points, then interpolates the error during the
@@ -262,6 +264,8 @@ class ErrorBoundInterpolator(object):
         Will not work outside the bounds    
         """
         super(ErrorBoundInterpolator,self).__init__()
+        v1, e1 = point1
+        v2, e2 = point2
         if v1 >= v2:
             raise ValueError("v1 must be less than v2.")
         self.lo = v1
@@ -512,7 +516,7 @@ def detectPulses(hiSampleData, risingThreshold, fallingThreshold, minPulseDurati
 
     # list currently contains intervals, convert to indices of the centre point (which might be at a halfway)
     # the end values are the positions where it went back to low, therefore the last high is end-1
-    pulseIndices = map(lambda (start,end) : (start+(end-1))/2.0, pulseIntervals)
+    pulseIndices = map(lambda interval : (interval[0]+(interval[1]-1))/2.0, pulseIntervals)
     return pulseIndices
 
 
@@ -660,7 +664,7 @@ class BeepFlashDetector(object):
         # set it quite long to cope with backlight flicker issues
         holdTime = flashDurationSecs * 0.5    # half of the flash duration
         holdCount = int(holdTime * 1000)     # one sample = 1 millisecond
-	minFlashDuration = flashDurationSecs * 0.5
+        minFlashDuration = flashDurationSecs * 0.5
         minFlashCount = int(minFlashDuration * 1000)
         
         # run the detection
@@ -689,7 +693,7 @@ class BeepFlashDetector(object):
         # set it quite long to cope with badly shaped waveforms
         holdTime = beepDurationSecs * 0.5    # half of the beep duration
         holdCount = int(holdTime * 1000)     # one sample = 1 millisecond
-	minBeepDuration = beepDurationSecs * 0.75
+        minBeepDuration = beepDurationSecs * 0.75
         minBeepCount = int(minBeepDuration * 1000)
         
         # run the detection
