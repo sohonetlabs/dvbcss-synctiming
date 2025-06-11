@@ -31,11 +31,22 @@ This document outlines a comprehensive plan to enhance the DVB CSS synchronizati
 
 See [RUFF_PASS_SUMMARY.md](RUFF_PASS_SUMMARY.md) for details.
 
-### Frame Rate Support
-The system currently only supports integer frame rates defined in `fpsBitTimings`:
-- **Supported**: 24, 25, 30, 48, 50, 60 fps
-- **Missing**: 23.976 (24000/1001), 29.97 (30000/1001), 59.94 (60000/1001)
-- **Impact**: Cannot test devices using broadcast standards or film-to-video transfers
+### ✅ Frame Rate Support [COMPLETED]
+~The system currently only supports integer frame rates defined in `fpsBitTimings`:~
+- ~**Supported**: 24, 25, 30, 48, 50, 60 fps~
+- ~**Missing**: 23.976 (24000/1001), 29.97 (30000/1001), 59.94 (60000/1001)~
+- ~**Impact**: Cannot test devices using broadcast standards or film-to-video transfers~
+
+**UPDATE: Comprehensive fractional frame rate support is now complete!**
+- ✅ **NTSC rates**: 23.976, 29.97, 59.94, 119.88 fps
+- ✅ **PAL rates**: 25, 50, 100 fps  
+- ✅ **Cinema rates**: 24, 48, 96, 120 fps
+- ✅ **Broadcast shortcuts**: --fps-ntsc-film, --fps-pal, etc.
+- ✅ **Resolution presets**: DCI 4K, UHD, HD, SD formats
+- ✅ **Complete format presets**: --preset-1080p59.94, --preset-cinema-4k
+- ✅ **Professional CLI**: Over 40 shortcuts and presets
+
+See [test_sequence_gen/README_FRACTIONAL.md](test_sequence_gen/README_FRACTIONAL.md) for complete documentation.
 
 ### Code Areas Requiring Modification
 1. **`test_sequence_gen/src/generate.py:67-86`**: `fpsBitTimings` dictionary
