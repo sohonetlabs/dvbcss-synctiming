@@ -145,8 +145,6 @@ The overall process is:
 import sys
 import time
 
-from ws4py.server.cherrypyserver import WebSocketPlugin
-from dvbcss.protocol.cii import TimelineOption
 from dvbcss.clock import SysClock, CorrelatedClock, measurePrecision, TunableClock
 from dvbcss.protocol.client.wc.algorithm import LowestDispersionCandidate
 from dvbcss.protocol.client.wc import WallClockClient

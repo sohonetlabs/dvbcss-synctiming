@@ -272,11 +272,11 @@ class TestSequenceDurationCalculation:
         
         # 100 frames at 25 fps = 4 seconds exactly
         duration = calculate_sequence_duration(100, 25, 1)
-        assert duration == 4, f"100 frames at 25 fps should be 4 seconds"
+        assert duration == 4, "100 frames at 25 fps should be 4 seconds"
         
         # 150 frames at 30 fps = 5 seconds exactly  
         duration = calculate_sequence_duration(150, 30, 1)
-        assert duration == 5, f"150 frames at 30 fps should be 5 seconds"
+        assert duration == 5, "150 frames at 30 fps should be 5 seconds"
     
     def test_sequence_duration_fractional_fps(self):
         """Sequence duration for fractional frame rates"""
@@ -286,12 +286,12 @@ class TestSequenceDurationCalculation:
         # 30000 frames at 30000/1001 fps = 1001 seconds exactly
         duration = calculate_sequence_duration(30000, 30000, 1001)
         expected = Fraction(1001, 1)
-        assert duration == expected, f"30000 frames at 29.97 fps should be 1001 seconds"
+        assert duration == expected, "30000 frames at 29.97 fps should be 1001 seconds"
         
         # 24000 frames at 24000/1001 fps = 1001 seconds exactly
         duration = calculate_sequence_duration(24000, 24000, 1001)
         expected = Fraction(1001, 1)
-        assert duration == expected, f"24000 frames at 23.976 fps should be 1001 seconds"
+        assert duration == expected, "24000 frames at 23.976 fps should be 1001 seconds"
     
     def test_sequence_duration_zero_frames(self):
         """Zero frames should have zero duration"""

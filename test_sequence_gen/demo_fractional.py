@@ -35,7 +35,7 @@ def demo_basic_fractional():
             metadata_filename=os.path.join(tmpdir, "demo1_metadata.json")
         )
         
-        print(f"\nGeneration complete:")
+        print("\nGeneration complete:")
         print(f"  - Generated {result['event_count']} timing events")
         print(f"  - Frame rate: {format_fps_display(result['fps_rational'])}")
         print(f"  - Duration: {result['duration']} seconds")
@@ -95,7 +95,7 @@ def demo_cinema_workflow():
         "--title", "Cinema 4K Demo"
     ])
     
-    print(f"\nCinema configuration:")
+    print("\nCinema configuration:")
     print(f"  Frame rate: {format_fps_display(args.fps_rational)}")
     print(f"  Resolution: {args.size[0]}x{args.size[1]} (DCI 4K)")
     print(f"  Duration: {args.DURATION} seconds")
@@ -115,7 +115,7 @@ def demo_cinema_workflow():
             metadata_filename=os.path.join(tmpdir, "cinema_demo.json")
         )
         
-        print(f"\nGeneration results:")
+        print("\nGeneration results:")
         print(f"  - Events: {result['event_count']}")
         print(f"  - Audio samples: {result['sample_count']:,}")
         print(f"  - Exact frame duration: {1001/24000:.10f} seconds")

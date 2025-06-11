@@ -107,7 +107,7 @@ def generate_fractional_test_sequence(
         cycleHz=cycle_hz
     ))
     
-    print(f"Generating test sequence:")
+    print("Generating test sequence:")
     print(f"  Frame rate: {format_fps_display(fps_rational)}")
     print(f"  Resolution: {width}x{height}")
     print(f"  Duration: {adjusted_duration} seconds")
@@ -328,7 +328,7 @@ def main():
         )
         
         if result['success']:
-            print(f"\nSummary:")
+            print("\nSummary:")
             print(f"  Events generated: {result['event_count']}")
             print(f"  Frames generated: {result['frame_count']}")
             print(f"  Audio samples: {result['sample_count']}")

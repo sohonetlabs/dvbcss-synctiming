@@ -172,8 +172,8 @@ class TestTimecodeGeneration:
             result = frameNumToTimecode(0, fps, framesAreFields=False)
             parts = result.split(':')
             
-            assert len(parts) == 4, f"Timecode should have 4 parts separated by colons"
-            assert all(len(part) == 2 for part in parts), f"Each timecode part should be 2 digits"
+            assert len(parts) == 4, "Timecode should have 4 parts separated by colons"
+            assert all(len(part) == 2 for part in parts), "Each timecode part should be 2 digits"
 
 
 class TestCurrentCodePropertyTests:

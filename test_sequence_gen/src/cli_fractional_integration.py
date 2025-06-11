@@ -426,7 +426,7 @@ if __name__ == "__main__":
             print(f"  Error: {e}")
     
     # Test metadata creation
-    print(f"\nMetadata creation demo:")
+    print("\nMetadata creation demo:")
     print("=" * 30)
     
     fps_rational = (30000, 1001)
@@ -444,7 +444,7 @@ if __name__ == "__main__":
     print(f"Compatibility fps: {metadata['fps']}")
     
     # Show available presets
-    print(f"\nAvailable presets:")
+    print("\nAvailable presets:")
     print("=" * 20)
     
     presets = get_available_presets()
